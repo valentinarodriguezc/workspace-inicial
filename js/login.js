@@ -7,10 +7,10 @@ document.addEventListener('DOMContentLoaded', function() {
         loginForm.addEventListener('submit', function(event) {
             event.preventDefault();
 
-    let email = document.getElementById('email').value;
-    let password = document.getElementById('password').value;
+            let username = usernameField.value;
+            let password = passwordField.value;
 
-    if (email === '' || password === '') {
+            if (username === '' || password === '') {
         alert('Por favor, completa todos los campos.');
     } else {
         // Simulación de inicio de sesión exitoso para cualquier correo y contraseña
