@@ -8,25 +8,31 @@
   
   <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
   <link href="css/bootstrap.min.css" rel="stylesheet">
-  <link href="css/style-login.css" rel="stylesheet">
+  <link href="css/styles.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: rgb(248, 249, 250);
+    }
+  </style>
 </head>
+
 <body>
-  <header>
-    <h1>e-mercado</h1>
-</header>
-<main>
-    <div class="login-container">
-        <form id="loginForm" method="POST">
-            <label for="username">Usuario o email</label>
-            <input type="text" id="username" name="username" placeholder="Ingrese su usuario o email" autocomplete="username">
-            
-            <label for="password">Contraseña</label>
-            <input type="password" id="password" name="password" placeholder="Ingrese su contraseña" autocomplete="current-password">
-            <button type="submit">Ingresar</button>
-            <a href="https://ejemplo.com">¿Olvidaste tu contraseña?</a>
-        </form>
+  <main class="mt-5">
+    <div class="container">
+      <div class="alert alert-danger text-center" role="alert">
+        <h4 class="alert-heading">Funcionalidad en desarrollo</h4>
+      </div>
     </div>
-</main>
+  </main>
+  <footer class="text-muted">
+    <div class="container">
+      <p class="float-end">
+        <a href="#">Volver arriba</a>
+      </p>
+      <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a></p>
+    </div>
+  </footer>
   <script src="js/login.js"></script>
 </body>
+
 </html>
