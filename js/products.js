@@ -38,7 +38,7 @@ function mostrarProductos() {
   listaProductos.forEach(producto => {
     const tarjetaProducto = `
       <div class="col-md-4">
-        <div class="card mb-4 shadow-sm custom-card cursor-active">
+        <div class="cards" class="card mb-4 shadow-sm custom-card cursor-active">
           <img class="bd-placeholder-img card-img-top" src="${producto.image}" alt="${producto.name}">
           <h3 class="m-3">${producto.name}</h3>
           <div class="card-body">
