@@ -11,34 +11,44 @@ document.addEventListener('DOMContentLoaded', function() {
             let password = passwordField.value;
 
             if (username === '' || password === '') {
-        alert('Por favor, completa todos los campos.');
+                alert('Por favor, completa todos los campos.');
+            } else {
+                // Simulación de inicio de sesión exitoso para cualquier correo y contraseña
+                localStorage.setItem('isLoggedIn', 'true'); // Guardar la sesión
+                localStorage.setItem('username', username); // Guardar el nombre de usuario
+                window.location.href = "index.html"; // Redirigir a la página principal
+            }
+        });
     } else {
-        // Simulación de inicio de sesión exitoso para cualquier correo y contraseña
-        localStorage.setItem('isLoggedIn', 'true'); // Guardar la sesión
-        window.location.href = "index.html"; // Redirigir a la página principal
+        console.error('No se encontraron los elementos necesarios en el DOM.');
     }
-});
-} else {
-    console.error('No se encontraron los elementos necesarios en el DOM.');
-}
-// Código para la redirección basada en el estado de autenticación
-let currentFile = window.location.pathname.split('/').pop();
-if (!localStorage.getItem('isLoggedIn')) {
-    if (currentFile !== 'login.html') {
-        window.location.href = "login.html";
+
+    // Código para la redirección basada en el estado de autenticación
+    let currentFile = window.location.pathname.split('/').pop();
+    if (!localStorage.getItem('isLoggedIn')) {
+        if (currentFile !== 'login.html') {
+            window.location.href = "login.html";
+        }
+    } else {
+        // Mostrar el botón de cierre de sesión si el usuario está autenticado
+        let userOptions = document.querySelector('.user-options');
+        if (userOptions) {
+            userOptions.innerHTML = `
+                <a href="#" onclick="logout()">Cerrar Sesión</a>
+            `;
+        }
+
+        // Mostrar el nombre de usuario en el navbar
+        let username = localStorage.getItem('username');
+        let userLog = document.querySelector('.userLogged');
+        if (userLog && username) {
+            userLog.textContent = 'Bienvenid@,'+ username;
+        }
     }
-} else {
-    // Mostrar el botón de cierre de sesión si el usuario está autenticado
-    let userOptions = document.querySelector('.user-options');
-    if (userOptions) {
-        userOptions.innerHTML = `
-            <a href="#" onclick="logout()">Cerrar Sesión</a>
-        `;
-    }
-}
 });
 
 function logout() {
-localStorage.removeItem('isLoggedIn');
-window.location.href = "index.html";
+    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('username');
+    window.location.href = "index.html";
 }
