@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
         let username = localStorage.getItem('username');
         let userLog = document.querySelector('.userLogged');
         if (userLog && username) {
-            userLog.textContent = 'Bienvenid@,'+ username;
+            userLog.textContent = 'Bienvenid@: '+ username;
         }
     }
 });
