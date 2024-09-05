@@ -25,14 +25,37 @@ function mostrarProductos(productos) {
   contenedorProductos.innerHTML = contenedorHTML;
 }
 
+// Función para filtrar productos en tiempo real
+function filtrarProductos() {
+  const searchInput = document.querySelector('#searchInput'); // Seleccionar el input de búsqueda
+  
+   // Verificar que el campo de búsqueda exista
+   if (searchInput) {
+    searchInput.addEventListener('input', function(event) {
+      const searchTerm = event.target.value.toLowerCase(); // Convertir a minúsculas para búsqueda case-insensitive
+
+    // Filtrar productos que coincidan con el término de búsqueda en nombre o descripción
+    const productosFiltrados = listaProductos.filter(producto => 
+      producto.name.toLowerCase().includes(searchTerm) || 
+      producto.description.toLowerCase().includes(searchTerm)
+    );
+
+    // Mostrar los productos filtrados
+    mostrarProductos(productosFiltrados);
+  });
+} else {
+  console.error("Campo de búsqueda no encontrado");
+  }
+}
 // Cargar y mostrar los productos al cargar la página
 document.addEventListener('DOMContentLoaded', function() {
   let categoryId = localStorage.getItem("catID");
 
   getJSONData(PRODUCTS_URL + categoryId + EXT_TYPE).then(function(resultObj){
-
     if (resultObj.status === "ok"){
-      mostrarProductos(resultObj.data.products);
+      listaProductos = resultObj.data.products; // Asignar los productos obtenidos al array global
+      mostrarProductos(listaProductos); // Mostrar todos los productos inicialmente
+      filtrarProductos(); // Activar el filtrado en tiempo real
     }
   })
 });
