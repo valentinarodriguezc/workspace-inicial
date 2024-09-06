@@ -44,35 +44,3 @@ function mostrarProductos(productos) {
   });
   contenedorProductos.innerHTML = contenedorHTML;
 }
-
-
-
-
-
-// function setProductID(id) {
-//   localStorage.setItem("productID", id);
-//   window.location = "product-info.html";
-// }
-
-// // En la función mostrarProductos, agrega un evento `onclick` a cada tarjeta:
-// function mostrarProductos() {
-//   const contenedorProductos = document.querySelector('#listaProductos');
-//   contenedorProductos.innerHTML = ''; // Limpiar el contenedor
-
-//   listaProductos.forEach(producto => {
-//       const tarjetaProducto = `
-//         <div class="col-md-4">
-//           <div class="cards" class="card mb-4 shadow-sm custom-card cursor-active" onclick="setProductID(${producto.id})">
-//             <img class="bd-placeholder-img card-img-top" src="${producto.image}" alt="${producto.name}">
-//             <h3 class="m-3">${producto.name}</h3>
-//             <div class="card-body">
-//               <p class="card-text">${producto.description}</p>
-//               <p class="card-text"><strong>Precio:</strong> ${producto.cost} ${producto.currency}</p>
-//               <p class="card-text"><strong>Vendidos:</strong> ${producto.soldCount}</p>
-//             </div>
-//           </div>
-//         </div>
-//       `;
-//       contenedorProductos.innerHTML += tarjetaProducto;
-//   });
-// }
