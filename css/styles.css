@@ -208,3 +208,14 @@ a.custom-card:hover {
   color: white;
   font-weight: 500;
 }
+
+.card {
+  max-width: 600px;  /* Ajusta el tamaño máximo de la tarjeta */
+  margin: 20px auto; /* Centramos la tarjeta horizontalmente */
+}
+
+.carousel-inner img {
+  width: 100%;  /* Las imágenes ocuparán el 100% del contenedor del card */
+  height: 300px; /* Ajustamos la altura de las imágenes */
+  object-fit: cover; /* Para que las imágenes mantengan la proporción dentro del contenedor */
+}
