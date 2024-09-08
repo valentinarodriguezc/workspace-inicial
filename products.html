@@ -42,6 +42,36 @@
   <main class="pb-5 container">
     <div class="container">
       
+      <!-- Contenedor para los controles de filtrado -->
+<div class="container my-4">
+  <div class="row">
+    <div class="col-md-4">
+      <input type="number" class="form-control" id="minPrice" placeholder="Precio mínimo">
+    </div>
+    <div class="col-md-4">
+      <input type="number" class="form-control" id="maxPrice" placeholder="Precio máximo">
+    </div>
+    <div class="col-md-4">
+      <button class="btn btn-primary btn-block" id="filterButton">Filtrar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Contenedor para los controles de ordenamiento -->
+<div class="container my-4">
+  <div class="row">
+    <div class="col-md-4">
+      <button class="btn btn-secondary btn-block" id="sortPriceAsc">Ordenar por Precio (Ascendente)</button>
+    </div>
+    <div class="col-md-4">
+      <button class="btn btn-secondary btn-block" id="sortPriceDesc">Ordenar por Precio (Descendente)</button>
+    </div>
+    <div class="col-md-4">
+      <button class="btn btn-secondary btn-block" id="sortRelevanceDesc">Ordenar por Relevancia (Descendente)</button>
+    </div>
+  </div>
+</div>
+
       <!-- Contenedor para las tarjetas de productos -->
       <div class="row" id="listaProductos"></div>
       
