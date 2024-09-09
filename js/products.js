@@ -4,43 +4,6 @@ let minPrice = undefined;
 let maxPrice = undefined;
 let currentSortCriteria = undefined;
 
-// Cargar y mostrar los productos al cargar la página
-document.addEventListener('DOMContentLoaded', function() {
-  let categoryId = localStorage.getItem("catID");
-
-  getJSONData(PRODUCTS_URL + categoryId + EXT_TYPE).then(function(resultObj){
-
-    if (resultObj.status === "ok"){
-      listaProductos = resultObj.data.products;
-      mostrarProductos(listaProductos);
-    }
-  })
-});
-
- // Añadir evento al botón de filtrado
- document.getElementById('filterButton').addEventListener('click', function() {
-  minPrice = parseFloat(document.getElementById('minPrice').value);
-  maxPrice = parseFloat(document.getElementById('maxPrice').value);
-  mostrarProductos(listaProductos);
-});
-
-
-
-  // Añadir eventos a los botones de ordenamiento
-  document.getElementById('sortAscPrice').addEventListener('click', function() {
-    currentSortCriteria = "PRICE_ASC";
-    mostrarProductos(listaProductos);
-  });
-
-  document.getElementById('sortPriceDesc').addEventListener('click', function() {
-    currentSortCriteria = 'priceDesc';
-    mostrarProductos(listaProductos);
-  });
-
-  document.getElementById('sortRelevanceDesc').addEventListener('click', function() {
-    currentSortCriteria = 'relevanceDesc';
-    mostrarProductos(listaProductos);
-  });
 
 
 function setProductID(id) {
@@ -129,3 +92,28 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   })
 });
+// Añadir evento al botón de filtrado
+document.getElementById('filterButton').addEventListener('click', function() {
+  minPrice = parseFloat(document.getElementById('minPrice').value);
+  maxPrice = parseFloat(document.getElementById('maxPrice').value);
+  mostrarProductos(listaProductos);
+});
+
+
+
+  // Añadir eventos a los botones de ordenamiento
+  document.getElementById('sortAscPrice').addEventListener('click', function() {
+    currentSortCriteria = "PRICE_ASC";
+    mostrarProductos(listaProductos);
+  });
+
+  document.getElementById('sortPriceDesc').addEventListener('click', function() {
+    currentSortCriteria = 'priceDesc';
+    mostrarProductos(listaProductos);
+  });
+
+  document.getElementById('sortRelevanceDesc').addEventListener('click', function() {
+    currentSortCriteria = 'relevanceDesc';
+    mostrarProductos(listaProductos);
+  });
+
