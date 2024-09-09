@@ -37,6 +37,7 @@
       <div class="search-bar mt-3" style="position: absolute; top: 50px; right: 10px; z-index: 1;">
         <input type="search" id="searchInput" placeholder="¿Qué estás buscando?" aria-label="Buscar productos">
       </div>
+      <div class="user-options"></div> <!-- Añadir esta línea -->
       <div class="userLogged"></div>
       </div>
     </div>
@@ -44,6 +45,36 @@
   <main class="pb-5 container">
     <div class="container" style="margin-top: 80px;"> <!-- Agregar margen superior aquí -->
       
+      <!-- Contenedor para los controles de filtrado -->
+<div class="container my-4">
+  <div class="row">
+    <div class="col-md-4">
+      <input type="number" class="form-control" id="minPrice" placeholder="Precio mínimo">
+    </div>
+    <div class="col-md-4">
+      <input type="number" class="form-control" id="maxPrice" placeholder="Precio máximo">
+    </div>
+    <div class="col-md-4">
+      <button class="btn btn-primary btn-block" id="filterButton">Filtrar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Contenedor para los controles de ordenamiento -->
+<div class="container my-4">
+  <div class="row">
+    <div class="col-md-4">
+      <button class="btn btn-secondary btn-block" id="sortPriceAsc">Ordenar por Precio (Ascendente)</button>
+    </div>
+    <div class="col-md-4">
+      <button class="btn btn-secondary btn-block" id="sortPriceDesc">Ordenar por Precio (Descendente)</button>
+    </div>
+    <div class="col-md-4">
+      <button class="btn btn-secondary btn-block" id="sortRelevanceDesc">Ordenar por Relevancia (Descendente)</button>
+    </div>
+  </div>
+</div>
+
       <!-- Contenedor para las tarjetas de productos -->
       <div class="row" id="listaProductos"></div>
       
