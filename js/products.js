@@ -103,7 +103,7 @@ document.getElementById('filterButton').addEventListener('click', function() {
 
   // Añadir eventos a los botones de ordenamiento
   document.getElementById('sortAscPrice').addEventListener('click', function() {
-    currentSortCriteria = "PRICE_ASC";
+    currentSortCriteria = 'ascPrice';
     mostrarProductos(listaProductos);
   });
 
