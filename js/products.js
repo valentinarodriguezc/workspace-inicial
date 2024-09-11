@@ -87,6 +87,7 @@ document.addEventListener('DOMContentLoaded', function() {
   getJSONData(PRODUCTS_URL + categoryId + EXT_TYPE).then(function(resultObj){
     if (resultObj.status === "ok"){
       listaProductos = resultObj.data.products; // Asignar los productos obtenidos al array global
+      document.getElementById("categoryname").innerHTML=resultObj.data.catName;
       mostrarProductos(listaProductos); // Mostrar todos los productos inicialmente
       filtrarProductos(); // Activar el filtrado en tiempo real
     }
