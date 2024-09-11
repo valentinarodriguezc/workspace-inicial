@@ -90,20 +90,22 @@ document.addEventListener('DOMContentLoaded', function() {
       mostrarProductos(listaProductos); // Mostrar todos los productos inicialmente
       filtrarProductos(); // Activar el filtrado en tiempo real
     }
-  })
-});
+  }).catch(function(error) {
+    console.error('Error al obtener datos:', error);
+  });
+  });
 // Añadir evento al botón de filtrado
-document.getElementById('filterButton').addEventListener('click', function() {
-  minPrice = parseFloat(document.getElementById('minPrice').value);
-  maxPrice = parseFloat(document.getElementById('maxPrice').value);
+document.getElementById('rangeFilterPrice').addEventListener('click', function() {
+  minPrice = parseFloat(document.getElementById('rangeFilterPriceMin').value);
+  maxPrice = parseFloat(document.getElementById('rangeFilterPriceMax').value);
   mostrarProductos(listaProductos);
 });
 
 
 
   // Añadir eventos a los botones de ordenamiento
-  document.getElementById('sortAscPrice').addEventListener('click', function() {
-    currentSortCriteria = 'ascPrice';
+  document.getElementById('sortpriceAsc').addEventListener('click', function() {
+    currentSortCriteria = 'priceAsc';
     mostrarProductos(listaProductos);
   });
 
@@ -116,4 +118,17 @@ document.getElementById('filterButton').addEventListener('click', function() {
     currentSortCriteria = 'relevanceDesc';
     mostrarProductos(listaProductos);
   });
+// Añadir evento al botón de limpiar filtro
+document.getElementById('clearPriceFilter').addEventListener('click', function() {
+  // Limpiar los campos de entrada de precios
+  document.getElementById('rangeFilterPriceMin').value = '';
+  document.getElementById('rangeFilterPriceMax').value = '';
+
+  // Restablecer las variables de rango de precios
+  minPrice = undefined;
+  maxPrice = undefined;
+
+  // Mostrar todos los productos (sin filtro)
+  mostrarProductos(listaProductos);
+});
 

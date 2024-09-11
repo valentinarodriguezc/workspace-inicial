@@ -45,35 +45,55 @@
   <main class="pb-5 container">
     <div class="container" style="margin-top: 80px;"> <!-- Agregar margen superior aquí -->
       
-      <!-- Contenedor para los controles de filtrado -->
-<div class="container my-4">
-  <div class="row">
-    <div class="col-md-4">
-      <input type="number" class="form-control" id="minPrice" placeholder="Precio mínimo">
-    </div>
-    <div class="col-md-4">
-      <input type="number" class="form-control" id="maxPrice" placeholder="Precio máximo">
-    </div>
-    <div class="col-md-4">
-      <button class="btn btn-primary btn-block" id="filterButton">Filtrar</button>
-    </div>
-  </div>
-</div>
-
-<!-- Contenedor para los controles de ordenamiento -->
-<div class="container my-4">
-  <div class="row">
-    <div class="col-md-4">
-      <button class="btn btn-secondary btn-block" id="sortPriceAsc">Ordenar por Precio (Ascendente)</button>
-    </div>
-    <div class="col-md-4">
-      <button class="btn btn-secondary btn-block" id="sortPriceDesc">Ordenar por Precio (Descendente)</button>
-    </div>
-    <div class="col-md-4">
-      <button class="btn btn-secondary btn-block" id="sortRelevanceDesc">Ordenar por Relevancia (Descendente)</button>
-    </div>
-  </div>
-</div>
+  
+        <div class="text-center p-4">
+          <h2 id="pageTitle">Productos</h2>
+          <p class="lead" id="categoryDescription">Veras aquí todos los productos de la categoría.</p>
+        </div>
+        <div class="container">
+          <!-- Controles de Ordenación -->
+          <div class="row">
+            <div class="col text-end">
+              <div class="btn-group" role="group">
+                <!-- Ordenar por Precio Ascendente -->
+                <input type="radio" class="btn-check" name="options" id="sortPriceAsc" autocomplete="off">
+                <label class="btn btn-outline-secondary" for="sortPriceAsc"> <i class="fas fa-sort-amount-down mr-1"></i> $</label>
+                
+                <!-- Ordenar por Precio Descendente -->
+                <input type="radio" class="btn-check" name="options" id="sortPriceDesc" autocomplete="off">
+                <label class="btn btn-outline-secondary" for="sortPriceDesc"> <i class="fas fa-sort-amount-up mr-1"></i> $</label>
+                
+                <!-- Ordenar por Relevancia (Cantidad Vendida) -->
+                <input type="radio" class="btn-check" name="options" id="sortByRelevance" autocomplete="off" checked>
+                <label class="btn btn-outline-secondary" for="sortByRelevance"><i class="fas fa-sort-amount-down mr-1"></i> Rel.</label>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Filtro por Rango de Precio -->
+          <div class="row">
+            <div class="col-lg-6 offset-lg-6 col-md-12 mb-1 container">
+              <div class="row container p-0 m-0">
+                <div class="col">
+                  <p class="font-weight-normal text-end my-2">Precio</p>
+                </div>
+                <div class="col">
+                  <input class="form-control" type="number" placeholder="mín." id="rangeFilterPriceMin">
+                </div>
+                <div class="col">
+                  <input class="form-control" type="number" placeholder="máx." id="rangeFilterPriceMax">
+                </div>
+                <div class="col-3 p-0">
+                  <div class="btn-group" role="group">
+                    <button class="btn btn-light btn-block" id="rangeFilterPrice">Filtrar</button>
+                    <button class="btn btn-link btn-sm" id="clearPriceFilter">Limpiar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+        
 
       <!-- Contenedor para las tarjetas de productos -->
       <div class="row" id="listaProductos"></div>
@@ -100,6 +120,17 @@
   <script src="js/init.js"></script>
   <script src="js/products.js"></script>
   <script src="js/login.js"></script>
+
+  <!-- Aquí agregamos el script que resetea los filtros de precio -->
+  <script>
+    document.getElementById('clearPriceFilter').addEventListener('click', function() {
+      document.getElementById('rangeFilterPriceMin').value = '';
+      document.getElementById('rangeFilterPriceMax').value = '';
+      minPrice = undefined;
+      maxPrice = undefined;
+      mostrarProductos(listaProductos);
+    });
+    <script>
 </body>
 
 </html>
