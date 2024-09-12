@@ -89,6 +89,14 @@ document.addEventListener('DOMContentLoaded', function() {
       listaProductos = resultObj.data.products; // Asignar los productos obtenidos al array global
       document.getElementById("categoryname").innerHTML=resultObj.data.catName;
       mostrarProductos(listaProductos); // Mostrar todos los productos inicialmente
+      document.getElementById("categoryname").innerHTML=resultObj.data.catName;
+      
+      // Aquí añades la verificación de si hay productos
+      if (listaProductos && listaProductos.length > 0) {
+        mostrarProductos(listaProductos); // Mostrar todos los productos inicialmente
+      } else {
+        console.error("No hay productos cargados para filtrar.");
+      }
       filtrarProductos(); // Activar el filtrado en tiempo real
     }
   }).catch(function(error) {
@@ -97,15 +105,22 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 // Añadir evento al botón de filtrado
 document.getElementById('rangeFilterPrice').addEventListener('click', function() {
-  minPrice = parseFloat(document.getElementById('rangeFilterPriceMin').value);
-  maxPrice = parseFloat(document.getElementById('rangeFilterPriceMax').value);
+  let minPriceValue = document.getElementById('rangeFilterPriceMin').value;
+  let maxPriceValue = document.getElementById('rangeFilterPriceMax').value;
+
+  minPrice = minPriceValue ? parseFloat(minPriceValue) : undefined;
+  maxPrice = maxPriceValue ? parseFloat(maxPriceValue) : undefined;
+
+  if (isNaN(minPrice)) minPrice = undefined;
+  if (isNaN(maxPrice)) maxPrice = undefined;
+
   mostrarProductos(listaProductos);
 });
 
 
 
   // Añadir eventos a los botones de ordenamiento
-  document.getElementById('sortpriceAsc').addEventListener('click', function() {
+  document.getElementById('sortPriceAsc').addEventListener('click', function() {
     currentSortCriteria = 'priceAsc';
     mostrarProductos(listaProductos);
   });
@@ -115,9 +130,13 @@ document.getElementById('rangeFilterPrice').addEventListener('click', function()
     mostrarProductos(listaProductos);
   });
 
-  document.getElementById('sortRelevanceDesc').addEventListener('click', function() {
+  document.getElementById('sortByRelevanceDesc').addEventListener('click', function() {
     currentSortCriteria = 'relevanceDesc';
+    if (listaProductos && listaProductos.length > 0) {
     mostrarProductos(listaProductos);
+  } else {
+    console.error("No hay productos disponibles para ordenar.");
+  }
   });
 // Añadir evento al botón de limpiar filtro
 document.getElementById('clearPriceFilter').addEventListener('click', function() {
