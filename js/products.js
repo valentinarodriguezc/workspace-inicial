@@ -130,7 +130,7 @@ document.getElementById('rangeFilterPrice').addEventListener('click', function()
     mostrarProductos(listaProductos);
   });
 
-  document.getElementById('sortByRelevanceDesc').addEventListener('click', function() {
+  document.getElementById('sortByRelevance').addEventListener('click', function() {
     currentSortCriteria = 'relevanceDesc';
     if (listaProductos && listaProductos.length > 0) {
     mostrarProductos(listaProductos);
