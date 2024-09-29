@@ -219,3 +219,25 @@ a.custom-card:hover {
   height: 300px; /* Ajustamos la altura de las imágenes */
   object-fit: cover; /* Para que las imágenes mantengan la proporción dentro del contenedor */
 }
+
+.fa-star {
+  font-size: 20px; /* Ajusta el tamaño según sea necesario */
+  color: lightgray; /* Color por defecto de las estrellas no seleccionadas */
+}
+
+.fa-star.checked {
+  color: gold; /* Color de las estrellas seleccionadas */
+}
+
+.comment {
+  border-bottom: 1px solid #ccc; /* Línea divisoria entre comentarios */
+  padding: 10px 15px; /* Espaciado entre comentarios */
+  margin: 10px 0; /* Espaciado vertical entre comentarios */
+  background-color: #f9f9f9; /* Fondo suave para los comentarios */
+  border-radius: 5px; /* Bordes redondeados para un estilo más suave */
+}
+
+.comments-section {
+  margin-left: 60px; /* Margen a la izquierda para toda la sección de comentarios */
+  margin-right: 60px; /* Margen a la derecha para toda la sección de comentarios */
+}

@@ -3,9 +3,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     let productInfo = document.getElementById("product-info");
 
     const responseID = await getJSONData(PRODUCT_INFO_URL + productID + EXT_TYPE);
+    const responseComments = await getJSONData(PRODUCT_INFO_COMMENTS_URL + productID + EXT_TYPE);
 
-    if (responseID.status === "ok") {
+    if (responseID.status === "ok" && responseComments.status === "ok") {
         let product = responseID.data;
+        let productComments = responseComments.data;
 
         // Variable para almacenar las imágenes en un carrusel
         let imagesHTML = '';
@@ -49,7 +51,33 @@ document.addEventListener("DOMContentLoaded", async () => {
                 </div>
             </div>
         `;
+
+        // Agregar la sección de comentarios
+        const commentsSection = document.createElement("div");
+        commentsSection.classList.add("mt-4");
+        commentsSection.innerHTML = `
+            <h5 class= "comments-section">Comentarios:</h5>
+            ${productComments.map(comment => `
+                <div class="comment mb-3 comments-section">
+                    <h6>${comment.user}</h6>
+                    <div class="stars">${getStars(comment.score)}</div>
+                    <p>${comment.description}</p>
+                    <p><small class="text-muted">${new Date(comment.dateTime).toLocaleString()}</small></p>
+                </div>
+            `).join('')}
+        `;
+        
+        productInfo.appendChild(commentsSection);
     } else {
         productInfo.innerHTML = `<p>Error al cargar la información del producto</p>`;
     }
 });
+
+// Función para generar estrellas según la calificación
+function getStars(score) {
+    let starsHTML = '';
+    for (let i = 1; i <= 5; i++) {
+        starsHTML += `<span class="fa fa-star ${i <= score ? 'checked' : ''}"></span>`;
+    }
+    return starsHTML;
+}
