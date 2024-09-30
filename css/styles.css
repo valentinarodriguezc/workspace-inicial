@@ -241,3 +241,82 @@ a.custom-card:hover {
   margin-left: 60px; /* Margen a la izquierda para toda la sección de comentarios */
   margin-right: 60px; /* Margen a la derecha para toda la sección de comentarios */
 }
+
+.opinion {
+  border: 1px solid #ddd;
+  padding: 20px;
+  width: 100%;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  margin: 20px auto;
+}
+
+.opinion {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.rating-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.rating-form .stars {
+  display: flex;
+  flex-direction: row-reverse; /* Esto mantiene el orden correcto en el formulario */
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}
+
+.stars input[type="radio"] {
+  display: none; /* Ocultar los botones de radio */
+}
+
+.stars label {
+  font-size: 30px;
+  color: #ddd; /* Estrellas grises por defecto */
+  cursor: pointer;
+}
+
+.stars input[type="radio"]:checked ~ label {
+  color: gold; /* Estrellas doradas cuando están seleccionadas */
+}
+
+/* Cambia el color de las estrellas seleccionadas y las anteriores */
+.stars input[type="radio"]:checked + label,
+.stars input[type="radio"]:checked + label ~ label {
+    color: gold;
+}
+
+.stars label:hover,
+.stars label:hover ~ label {
+  color: gold; /* Efecto hover, las estrellas doradas al pasar el ratón */
+}
+
+textarea {
+  width: 100%;
+  height: 100px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  resize: none;
+}
+
+.my-button {
+  background-color: #fafafa;
+  color: rgb(8, 0, 0);
+  border: rgb(57, 52, 52);
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 12px;
+  padding: 5px 10px; 
+  width: 90px;
+  height: 40px;
+  margin-left: auto;
+}
+
+button:hover {
+  background-color: #1e68b8;
+}
