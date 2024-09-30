@@ -52,6 +52,51 @@ document.addEventListener("DOMContentLoaded", async () => {
             </div>
         `;
 
+       // Verificar si hay productos relacionados
+       if (!product.relatedProducts || !Array.isArray(product.relatedProducts) || product.relatedProducts.length === 0) {
+        console.error("No hay productos relacionados disponibles.");
+        return;
+    }
+
+    const relatedProductIDs = product.relatedProducts;
+    console.log("Productos relacionados:", relatedProductIDs);  // Verificar los productos relacionados (objetos)
+
+    // Verificar las URLs que se generan, asegurándote de extraer solo el id
+    relatedProductIDs.forEach(relatedProduct => {
+        console.log("URL para producto relacionado:", PRODUCT_INFO_URL + relatedProduct.id + EXT_TYPE);
+    });
+
+    // Crear las promesas, asegurándote de que estamos usando solo el id
+    const relatedProductsPromises = relatedProductIDs.map(relatedProduct => getJSONData(PRODUCT_INFO_URL + relatedProduct.id + EXT_TYPE));
+    const relatedProductsResponses = await Promise.all(relatedProductsPromises);
+
+    // Verificar las respuestas de los productos relacionados
+    relatedProductsResponses.forEach((response, index) => {
+        console.log(`Respuesta del producto relacionado ${index + 1}:`, response);
+    });
+
+    let relatedProducts = relatedProductsResponses.map(response => response.data);
+
+    // Generar HTML de productos relacionados
+    let listaProductosRelacionados = document.getElementById("listaProductosRelacionados");
+    if (!listaProductosRelacionados) {
+        console.error("No se encontró el contenedor de productos relacionados.");
+        return;
+    }
+
+    let relatedProductsHTML = relatedProducts.map(relatedProduct => `
+        <div class="col-md-4">
+            <div class="related-product">
+                <img src="${relatedProduct.image || 'ruta/por_defecto.jpg'}" alt="${relatedProduct.name}" class="img-fluid" />
+                <p>${relatedProduct.cost} ${relatedProduct.currency}</p>
+               <button class="btn btn-primary" onclick="setProductID(${relatedProduct.id})">Ver Producto</button>
+        </div>
+         </div>
+    `).join('');
+
+    listaProductosRelacionados.innerHTML = relatedProductsHTML;
+
+
         // Agregar la sección de comentarios
         const commentsSection = document.createElement("div");
         commentsSection.classList.add("mt-4");
@@ -72,6 +117,12 @@ document.addEventListener("DOMContentLoaded", async () => {
         productInfo.innerHTML = `<p>Error al cargar la información del producto</p>`;
     }
 });
+
+// Función para redirigir al producto seleccionado
+function setProductID(id) {
+    localStorage.setItem("productID", id);  // Guardar el ID del producto en localStorage
+    window.location = "product-info.html";  // Redirigir a la página de detalles del producto
+}
 
 // Función para generar estrellas según la calificación
 function getStars(score) {
