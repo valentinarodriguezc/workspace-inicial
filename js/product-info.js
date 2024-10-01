@@ -1,3 +1,4 @@
+let relatedProducts = [];  // Definir como variable global para accederla fuera del bloque
 document.addEventListener("DOMContentLoaded", async () => {
     let productID = localStorage.getItem("productID");  // Recuperar el ID del producto
     let productInfo = document.getElementById("product-info");
@@ -51,50 +52,43 @@ document.addEventListener("DOMContentLoaded", async () => {
                 </div>
             </div>
         `;
+  // Verificar si hay productos relacionados
+  if (!product.relatedProducts || !Array.isArray(product.relatedProducts) || product.relatedProducts.length === 0) {
+    console.error("No hay productos relacionados disponibles.");
+    return;
+}
 
-       // Verificar si hay productos relacionados
-       if (!product.relatedProducts || !Array.isArray(product.relatedProducts) || product.relatedProducts.length === 0) {
-        console.error("No hay productos relacionados disponibles.");
-        return;
-    }
+const relatedProductIDs = product.relatedProducts;
+console.log("Productos relacionados:", relatedProductIDs);
 
-    const relatedProductIDs = product.relatedProducts;
-    console.log("Productos relacionados:", relatedProductIDs);  // Verificar los productos relacionados (objetos)
+// Crear las promesas para obtener los productos relacionados
+const relatedProductsPromises = relatedProductIDs.map(relatedProduct => 
+    getJSONData(PRODUCT_INFO_URL + relatedProduct.id + EXT_TYPE)
+);
+const relatedProductsResponses = await Promise.all(relatedProductsPromises);
 
-    // Verificar las URLs que se generan, asegurándote de extraer solo el id
-    relatedProductIDs.forEach(relatedProduct => {
-        console.log("URL para producto relacionado:", PRODUCT_INFO_URL + relatedProduct.id + EXT_TYPE);
-    });
+// Asignar los productos relacionados a la variable global
+relatedProducts = relatedProductsResponses.map(response => response.data);
+console.log("Productos relacionados procesados:", relatedProducts);
 
-    // Crear las promesas, asegurándote de que estamos usando solo el id
-    const relatedProductsPromises = relatedProductIDs.map(relatedProduct => getJSONData(PRODUCT_INFO_URL + relatedProduct.id + EXT_TYPE));
-    const relatedProductsResponses = await Promise.all(relatedProductsPromises);
+// Generar HTML de productos relacionados
+let listaProductosRelacionados = document.getElementById("listaProductosRelacionados");
+if (!listaProductosRelacionados) {
+    console.error("No se encontró el contenedor de productos relacionados.");
+    return;
+}
 
-    // Verificar las respuestas de los productos relacionados
-    relatedProductsResponses.forEach((response, index) => {
-        console.log(`Respuesta del producto relacionado ${index + 1}:`, response);
-    });
-
-    let relatedProducts = relatedProductsResponses.map(response => response.data);
-
-    // Generar HTML de productos relacionados
-    let listaProductosRelacionados = document.getElementById("listaProductosRelacionados");
-    if (!listaProductosRelacionados) {
-        console.error("No se encontró el contenedor de productos relacionados.");
-        return;
-    }
-
-    let relatedProductsHTML = relatedProducts.map(relatedProduct => `
-        <div class="col-md-4">
-            <div class="related-product">
-                <img src="${relatedProduct.image || 'ruta/por_defecto.jpg'}" alt="${relatedProduct.name}" class="img-fluid" />
-                <p>${relatedProduct.cost} ${relatedProduct.currency}</p>
-               <button class="btn btn-primary" onclick="setProductID(${relatedProduct.id})">Ver Producto</button>
+let relatedProductsHTML = relatedProducts.map(relatedProduct => `
+    <div class="col-md-4">
+        <div class="related-product">
+            <img src="${relatedProduct.images[0] || 'ruta/por_defecto.jpg'}" alt="${relatedProduct.name}" class="img-fluid" />
+            <p>${relatedProduct.cost} ${relatedProduct.currency}</p>
+            <button class="btn btn-primary" onclick="setProductID(${relatedProduct.id})">Ver Producto</button>
         </div>
-         </div>
-    `).join('');
+    </div>
+`).join('');
 
-    listaProductosRelacionados.innerHTML = relatedProductsHTML;
+listaProductosRelacionados.innerHTML = relatedProductsHTML;
 
 
         // Agregar la sección de comentarios
