@@ -80,10 +80,13 @@ if (!listaProductosRelacionados) {
 
 let relatedProductsHTML = relatedProducts.map(relatedProduct => `
     <div class="col-md-4">
-        <div class="related-product">
-            <img src="${relatedProduct.images[0] || 'ruta/por_defecto.jpg'}" alt="${relatedProduct.name}" class="img-fluid" />
-            <p>${relatedProduct.cost} ${relatedProduct.currency}</p>
-            <button class="btn btn-primary" onclick="setProductID(${relatedProduct.id})">Ver Producto</button>
+         <div class="card mb-4 shadow-sm cursor-active" onclick="setProductID(${relatedProduct.id})">
+            <img src="${relatedProduct.images[0] || 'ruta/por_defecto.jpg'}" alt="${relatedProduct.name}" class="card-img-top img-fluid" />
+            <div class="card-body">
+            <h5 class="card-title">${relatedProduct.name}</h5>
+             <p class="card-text"><strong>Precio:</strong> ${relatedProduct.cost} ${relatedProduct.currency}</p>
+                <p class="card-text"><strong>Vendidos:</strong> ${relatedProduct.soldCount}</p>
+            </div>
         </div>
     </div>
 `).join('');
