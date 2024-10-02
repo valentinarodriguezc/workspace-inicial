@@ -79,7 +79,7 @@ if (!listaProductosRelacionados) {
 }
 
 let relatedProductsHTML = relatedProducts.map(relatedProduct => `
-    <div class="col-md-4">
+    <div class="col-md-3">
          <div class="card mb-4 shadow-sm cursor-active" onclick="setProductID(${relatedProduct.id})">
             <img src="${relatedProduct.images[0] || 'ruta/por_defecto.jpg'}" alt="${relatedProduct.name}" class="card-img-top img-fluid" />
             <div class="card-body">
