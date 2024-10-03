@@ -47,8 +47,9 @@
       <div id="imagenesProducto"></div>
       <!-- Formulario de opinión -->
       <h5>Dejanos tu opinión</h5>
+
        <div class="opinion">
-        <form class="rating-form">
+        <form id="opinion-form" class="rating-form">
         <div class="stars">
           <input type="radio" id="star5" name="rating" value="5">
           <label for="star5" class="fa fa-star"></label>
@@ -61,11 +62,12 @@
           <input type="radio" id="star1" name="rating" value="1">
           <label for="star1" class="fa fa-star"></label>
         </div>
-          <textarea name="comentario" placeholder="Realiza un comentario"></textarea>
+          <textarea id="comentarios"  name="comentario" placeholder="Realiza un comentario"></textarea>
           <button class="my-button" type="submit">Enviar</button>
       </form>
   </div>
-    </div>
+  <div class="opinion" id="comments-section"></div> <!-- Sección donde se agregarán los comentarios -->
+</div>
     <div id="productosRelacionados" class="mt-4"></div>
     <h5>Productos Relacionados</h5>
     <div class="row" id="listaProductosRelacionados"></div>

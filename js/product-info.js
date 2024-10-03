@@ -96,6 +96,7 @@ listaProductosRelacionados.innerHTML = relatedProductsHTML;
 
         // Agregar la sección de comentarios
         const commentsSection = document.createElement("div");
+        commentsSection.id = "comments-section";
         commentsSection.classList.add("mt-4");
         commentsSection.innerHTML = `
             <h5 class= "comments-section">Comentarios:</h5>
@@ -129,3 +130,47 @@ function getStars(score) {
     }
     return starsHTML;
 }
+//Agregar un comentario a la seccion de comentarios 
+
+const opinionForm = document.getElementById('opinion-form');
+// Manejar el envío del formulario
+opinionForm.addEventListener( 'submit', function(event) {
+
+    event.preventDefault();  //Prevenir el comportamiento por defecto de envío
+
+    // Obtener la calificación seleccionada
+    const rating = document.querySelector('input[name="rating"]:checked');
+    const commentText = document.getElementById('comentarios').value;
+
+    if (!rating || !commentText) {
+        alert('Seleccionar una calificación y escribir un comentario.');
+        return;
+    }
+
+    // Crear el nuevo comentario
+    let yourName = localStorage.getItem('username');
+    const newComment = {
+        user: yourName,
+        score: rating.value,
+        description: commentText,
+        dateTime: new Date()
+    };
+
+    // Crear el HTML para el nuevo comentario
+    const commentsSection = document.getElementById('comments-section');
+    const commentHtml = `
+        <div class="comment mb-4">
+            <h6>${newComment.user}</h6>
+            <div class="stars">${getStars(newComment.score)}</div>
+            <p>${newComment.description}</p>
+            <p><small class="text-muted">${new Date(newComment.dateTime).toLocaleString()}</small></p>
+        </div>
+    `;
+
+    // Agregar el nuevo comentario a la sección de comentarios
+    const commentsSections = document.getElementById('comments-section');
+    commentsSections.innerHTML += commentHtml;
+
+    // Limpiar el formulario
+    opinionForm.reset();
+});
