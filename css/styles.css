@@ -331,3 +331,38 @@ button:hover {
   transform: scale(1.05); /* Agranda la tarjeta cuando se pasa el mouse */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Añade una sombra más visible al pasar el mouse */
 }
+
+/* Modo oscuro */
+.dark-mode {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+.dark-mode .card {
+  background-color: #1e1e1e;
+  border-color: #333;
+  color:white;
+}
+
+.comments-section {
+  color:black;
+}
+
+.comment mb-4 {
+  color: black;
+
+}
+
+.mb-4 {
+  color:black;
+  margin-left: 60px;
+  margin-right: 60px;
+}
+
+.form-switch {
+  margin-left: 20px;
+}
+
+.form-check-label {
+  color: white;
+}
