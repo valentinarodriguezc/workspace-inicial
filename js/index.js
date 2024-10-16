@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 });
  // Cambiar el nombre de usuario en el botón desplegable
- const userLogged = localStorage.getItem('username');
+ const userLogged = localStorage.getItem('email');
  if (userLogged) {
      document.getElementById("userDropdown").textContent = userLogged;
  }
@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function() {
  document.getElementById("logoutBtn").addEventListener("click", function() {
      // Eliminar la sesión y redirigir al login
      localStorage.removeItem('isLoggedIn');
-     localStorage.removeItem('username');
+     localStorage.removeItem('email');
      window.location.href = "login.html";
  });
 
