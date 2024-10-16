@@ -1,16 +1,23 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Verificar si el usuario está logueado
+    if (!localStorage.getItem('isLoggedIn')) {
+        alert('Por favor, inicia sesión para acceder a tu perfil.');
+        window.location.href = 'login.html'; // Redirigir a la página de login si no está logueado
+        return; // Detener la ejecución si no está logueado
+    }
+
     // Se selecciona el botón "Editar perfil" y el modal
     let editButton = document.querySelector('.edit-button');
     let modal = document.getElementById('editProfileModal');
     let closeModal = document.querySelector('.close');
 
-    // Rellenar el formulario con los datos actuales (solo e-mail)
+    // obtener el email almacenado en localStorage para rellenar
     document.getElementById('emailInput').value = localStorage.getItem('email') || '';
 
     // Cuando se haga clic en "Editar perfil"
     editButton.addEventListener('click', function() {
-        modal.style.display = 'flex'; // Mostrar el modal
-        // Rellenar el formulario con los datos actuales
+        modal.style.display = 'flex'; 
+        // Rellenar el formulario con los datos actuales (si existen)
         document.getElementById('nombreInput').value = localStorage.getItem('nombre') || '';
         document.getElementById('apellidoInput').value = localStorage.getItem('apellido') || '';
         document.getElementById('telefonoInput').value = localStorage.getItem('telefono') || '';
@@ -88,3 +95,4 @@ document.addEventListener('DOMContentLoaded', function() {
         modoDiaBtn.classList.remove('active');
     });
 });
+

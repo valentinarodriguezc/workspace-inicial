@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
                 // Simulación de inicio de sesión exitoso para cualquier correo y contraseña
                 localStorage.setItem('isLoggedIn', 'true'); // Guardar la sesión
-                localStorage.setItem('username', username); // Guardar el nombre de usuario
+                localStorage.setItem('email', username); // Guardar el nombre de usuario
                 window.location.href = "index.html"; // Redirigir a la página principal
             }
         });
@@ -49,6 +49,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function logout() {
     localStorage.removeItem('isLoggedIn');
-    localStorage.removeItem('username');
+    localStorage.removeItem('email');
     window.location.href = "index.html";
 }
