@@ -8,12 +8,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Función para cargar datos desde localStorage
     function loadFromLocalStorage() {
-        const nombre = localStorage.getItem('nombre') || '';
-        const segundoNombre = localStorage.getItem('segundo-nombre') || '';
-        const apellido = localStorage.getItem('apellido') || '';
-        const segundoApellido = localStorage.getItem('segundo-apellido') || '';
-        const email = localStorage.getItem('email') || '';
-        const telefono = localStorage.getItem('telefono') || '';
+        let nombre = localStorage.getItem('nombre') || '';
+        let segundoNombre = localStorage.getItem('segundo-nombre') || '';
+        let apellido = localStorage.getItem('apellido') || '';
+        let segundoApellido = localStorage.getItem('segundo-apellido') || '';
+        let email = localStorage.getItem('email') || '';
+        let telefono = localStorage.getItem('telefono') || '';
 
         // Actualizar la interfaz con los datos almacenados
         document.getElementById('nombre-primero').textContent = 'Nombre: ' + nombre;
