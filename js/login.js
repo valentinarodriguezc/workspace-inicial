@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() { 
     let loginForm = document.getElementById('loginForm');
     let usernameField = document.getElementById('username');
     let passwordField = document.getElementById('password');
@@ -29,23 +29,10 @@ document.addEventListener('DOMContentLoaded', function() {
         if (currentFile !== 'login.html') {
             window.location.href = "login.html";
         }
-    } else {
-        document.addEventListener("DOMContentLoaded", function() {
-            // Cambiar el nombre de usuario en el botón desplegable
-            const userLogged = localStorage.getItem('username');
-            if (userLogged) {
-                document.getElementById("userDropdown").textContent = userLogged;
-            }
-        
-            // Cerrar sesión
-            document.getElementById("logoutBtn").addEventListener("click", function() {
-                // Eliminar la sesión y redirigir al login
-                localStorage.removeItem('isLoggedIn');
-                localStorage.removeItem('username');
-                window.location.href = "login.html";
-            });
-        });
-    });
+    } 
+});
+
+// Función de cierre de sesión
 function logout() {
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('username');
