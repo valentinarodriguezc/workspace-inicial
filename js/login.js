@@ -30,23 +30,22 @@ document.addEventListener('DOMContentLoaded', function() {
             window.location.href = "login.html";
         }
     } else {
-        // Mostrar el botón de cierre de sesión si el usuario está autenticado
-        let userOptions = document.querySelector('.user-options');
-        if (userOptions) {
-            userOptions.innerHTML = `
-                <a href="#" onclick="logout()">Cerrar Sesión</a>
-            `;
-        }
-
-        // Mostrar el nombre de usuario en el navbar
-        let username = localStorage.getItem('username');
-        let userLog = document.querySelector('.userLogged');
-        if (userLog && username) {
-            userLog.textContent = 'Bienvenid@: '+ username;
-        }
-    }
-});
-
+        document.addEventListener("DOMContentLoaded", function() {
+            // Cambiar el nombre de usuario en el botón desplegable
+            const userLogged = localStorage.getItem('username');
+            if (userLogged) {
+                document.getElementById("userDropdown").textContent = userLogged;
+            }
+        
+            // Cerrar sesión
+            document.getElementById("logoutBtn").addEventListener("click", function() {
+                // Eliminar la sesión y redirigir al login
+                localStorage.removeItem('isLoggedIn');
+                localStorage.removeItem('username');
+                window.location.href = "login.html";
+            });
+        });
+    });
 function logout() {
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('username');

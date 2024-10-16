@@ -33,6 +33,27 @@
           <li class="nav-item">
           </li>
         </ul>
+        <!-- Aquí va el menú desplegable de usuario -->
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            <!-- Aquí debería ir el nombre de usuario -->
+            Usuario
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="userDropdown">
+            <li><a class="dropdown-item" href="cart.html">Mi carrito</a></li>
+            <li><a class="dropdown-item" href="my-profile.html">Mi perfil</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#" id="logoutBtn">Cerrar sesión</a></li>
+          </ul>
+        </div>
+        <!-- Fin del menú desplegable de usuario -->
+        <div class="form-check form-switch">
+          <input class="form-check-input" type="checkbox" role="switch" id="themeSwitch">
+          <label class="form-check-label" for="themeSwitch">Modo Noche</label>
+        </div>
+      </div>
+    </div>
+  </nav>
       </div>
       <div class="search-bar mt-3" style="position: absolute; top: 50px; right: 10px; z-index: 1;">
         <input type="search" id="searchInput" placeholder="¿Qué estás buscando?" aria-label="Buscar productos">
@@ -127,6 +148,7 @@
   <script src="js/products.js"></script>
   <script src="js/login.js"></script>
   <script src="js/theme.js"></script>
+  <script src="js/index.js"></script>
 
   <!-- Aquí agregamos el script que resetea los filtros de precio -->
   <script>
