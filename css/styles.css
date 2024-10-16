@@ -366,3 +366,19 @@ button:hover {
 .form-check-label {
   color: white;
 }
+
+.comments-section {
+  background-color: #E0E0E0;
+}
+
+#comentarios {
+  background-color: #E0E0E0;
+}
+
+.comentarios {
+  margin-left: 60px;
+}
+
+.productosRelacionados {
+  margin-left: 60px;
+}

@@ -99,7 +99,7 @@ listaProductosRelacionados.innerHTML = relatedProductsHTML;
         commentsSection.id = "comments-section";
         commentsSection.classList.add("mt-4");
         commentsSection.innerHTML = `
-            <h5 class= "comments-section">Comentarios:</h5>
+            <h5 class= "comentarios" >Comentarios:</h5>
             ${productComments.map(comment => `
                 <div class="comment mb-3 comments-section">
                     <h6>${comment.user}</h6>
