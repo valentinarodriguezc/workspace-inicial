@@ -6,6 +6,33 @@ document.addEventListener('DOMContentLoaded', function() {
         return; // Detener la ejecución si no está logueado
     }
 
+    // Función para cargar datos desde localStorage
+    function loadFromLocalStorage() {
+        let nombre = localStorage.getItem('nombre') || '';
+        let segundoNombre = localStorage.getItem('segundo-nombre') || '';
+        let apellido = localStorage.getItem('apellido') || '';
+        let segundoApellido = localStorage.getItem('segundo-apellido') || '';
+        let email = localStorage.getItem('email') || '';
+        let telefono = localStorage.getItem('telefono') || '';
+
+        // Actualizar la interfaz con los datos almacenados
+        document.getElementById('nombre-primero').textContent = 'Nombre: ' + nombre;
+        document.getElementById('segundo-nombre').textContent = 'Segundo nombre: ' + segundoNombre;
+        document.getElementById('apellido-primero').textContent = 'Apellido: ' + apellido;
+        document.getElementById('segundo-apellido').textContent = 'Segundo apellido: ' + segundoApellido;
+        document.getElementById('email-primero').textContent = 'E-mail: ' + email;
+        document.getElementById('telefono-primero').textContent = 'Teléfono: ' + telefono;
+
+        // También actualiza la parte superior del perfil
+        document.getElementById('nombreUsuario').textContent = nombre;
+        document.getElementById('apellidoUsuario').textContent = apellido;
+        document.getElementById('emailUsuario').textContent = email;
+        document.getElementById('telefonoUsuario').textContent = telefono;
+    }
+
+    // Cargar los datos cuando la página se cargue
+    loadFromLocalStorage();
+
     // Se selecciona el botón "Editar perfil" y el modal
     let editButton = document.querySelector('.edit-button');
     let modal = document.getElementById('editProfileModal');
@@ -62,7 +89,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('nombreUsuario').textContent = updatedNombre;
         document.getElementById('emailUsuario').textContent = updatedEmail;
         document.getElementById('apellidoUsuario').textContent = updatedApellido;
-        document.getElementById('telefonoUsuario').textContent = updatedTelefono;
+        //document.getElementById('telefonoUsuario').textContent = updatedTelefono;
 
         // Actualizar datos en la info-box (interfaz)
         document.getElementById('nombre-primero').textContent = 'Nombre: ' + updatedNombre;
@@ -71,6 +98,24 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('segundo-apellido').textContent = 'Segundo apellido: ' + updatedSegApellido;
         document.getElementById('email-primero').textContent = 'E-mail: ' + updatedEmail;
         document.getElementById('telefono-primero').textContent = 'Teléfono: ' + updatedTelefono;
+
+        // Función para la alerta
+        function showAlert(message) {
+            let alertBox = document.getElementById('alert');
+            alertBox.textContent = message;
+            alertBox.style.display = 'block';
+            alertBox.style.opacity = 1; 
+        
+            // Timer para que desaparezca
+            setTimeout(() => {
+                alertBox.style.opacity = 0; 
+                setTimeout(() => {
+                    alertBox.style.display = 'none'; 
+                }, 500); 
+            }, 3000);
+        }
+        // Mostrar la alerta 
+        showAlert("Cambios guardados correctamente");
 
         // Ocultar el modal
         modal.style.display = 'none';
@@ -95,4 +140,5 @@ document.addEventListener('DOMContentLoaded', function() {
         modoDiaBtn.classList.remove('active');
     });
 });
+
 
