@@ -5,6 +5,19 @@ document.addEventListener("DOMContentLoaded", function() {
         window.location.href = "login.html"; // Redirigir al login si no está autenticado
     }
 });
+ // Cambiar el nombre de usuario en el botón desplegable
+ const userLogged = localStorage.getItem('username');
+ if (userLogged) {
+     document.getElementById("userDropdown").textContent = userLogged;
+ }
+
+ // Cerrar sesión
+ document.getElementById("logoutBtn").addEventListener("click", function() {
+     // Eliminar la sesión y redirigir al login
+     localStorage.removeItem('isLoggedIn');
+     localStorage.removeItem('username');
+     window.location.href = "login.html";
+ });
 
 // Resto del código que maneja los eventos de los elementos de la página
 document.addEventListener("DOMContentLoaded", function(){

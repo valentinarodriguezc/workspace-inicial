@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() { 
     let loginForm = document.getElementById('loginForm');
     let usernameField = document.getElementById('username');
     let passwordField = document.getElementById('password');
@@ -29,24 +29,10 @@ document.addEventListener('DOMContentLoaded', function() {
         if (currentFile !== 'login.html') {
             window.location.href = "login.html";
         }
-    } else {
-        // Mostrar el botón de cierre de sesión si el usuario está autenticado
-        let userOptions = document.querySelector('.user-options');
-        if (userOptions) {
-            userOptions.innerHTML = `
-                <a href="#" onclick="logout()">Cerrar Sesión</a>
-            `;
-        }
-
-        // Mostrar el nombre de usuario en el navbar
-        let username = localStorage.getItem('username');
-        let userLog = document.querySelector('.userLogged');
-        if (userLog && username) {
-            userLog.textContent = 'Bienvenid@: '+ username;
-        }
-    }
+    } 
 });
 
+// Función de cierre de sesión
 function logout() {
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('email');
