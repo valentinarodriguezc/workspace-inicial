@@ -22,11 +22,12 @@ body {
   }
   
   .avatar {
-    margin-bottom: 15px;
+    margin-top: 2rem;
+    margin-bottom: 0;
   }
   
   .avatar-circle {
-    margin-top: 55%;
+    margin-top: 20rem;
     width: 200px;
     height: 200px;
     border-radius: 50%;
@@ -42,23 +43,20 @@ body {
     display: block;
   }
   
-  .info {
-    display: grid; 
-    grid-template-columns: repeat(2, 1fr); 
-    margin-left: 9rem;
-    margin-right: 9em;
+  .flex {
+    display: flex;
+    justify-content: center;
+    gap: 1rem; 
     color: white;
     margin-top: 2rem;
-  }
-  
-  #nombreUsuario {
-    margin-left: 1rem;
-    justify-content: center;
-  }
-  
-  #apellidoUsuario {
-    margin-right: 1rem;
-  }
+}
+
+.flex-p {
+  display: flex;
+  justify-content: center;
+  gap: 1rem; 
+  color: white;
+}
   
   .edit-button {
     background-color: #ffffff; 
@@ -67,7 +65,8 @@ body {
     border-radius: 50px;
     padding: 5px 15px;
     cursor: pointer;
-    margin-top: 10px;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
     font-size: 12px;
   }
   
@@ -89,7 +88,7 @@ body {
   
   #telefonoUsuario {
     display: inline-block;
-    margin-left: 5px; 
+    margin-left: 0.25rem; 
   }
   
   .footer-support {
@@ -108,7 +107,8 @@ body {
   }
 
   .theme-switcher {
-    margin-top: 15px;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
   }
   
   .theme-button {

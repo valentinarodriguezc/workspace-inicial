@@ -62,10 +62,10 @@
           </ul>
         </div>
         <!-- Fin del menú desplegable de usuario -->
-        <div class="form-check form-switch">
+        <!-- <div class="form-check form-switch">
           <input class="form-check-input" type="checkbox" role="switch" id="themeSwitch">
           <label class="form-check-label" for="themeSwitch">Modo Noche</label>
-        </div>
+        </div> -->
       </div>
     </div>
   </nav>
@@ -73,12 +73,11 @@
       <div class="user-options"></div> <!-- Añadir esta línea -->
       <div class="userLogged"></div>
       <div >
-        <div class="form-check form-switch">
+        <!--<div class="form-check form-switch">
           <input class="form-check-input" type="checkbox" role="switch" id="themeSwitch">
           <label class="form-check-label" for="themeSwitch">Modo Noche</label>
-        </div>
+        </div>-->
       </div>
-      
       </div>
     </div>
   </nav>
@@ -89,20 +88,25 @@
           <div class="avatar">
             <div class="avatar-circle"><img src="img/img_perfil.png" alt="Imagen de perfil"></div>
           </div>
+          <!-- Contenedor con los datos superiores -->
           <div class="info">
-            <h2 id="nombreUsuario">Nombre</h2>
-            <h2 id="apellidoUsuario">Apellido</h2>
-            <p id="emailUsuario">Email</p>
-            <p id="telefonoUsuario">Teléfono</p>
+            <div class="flex">
+              <h2 id="nombreUsuario">Nombre</h2>
+              <h2 id="apellidoUsuario">Apellido</h2>
+            </div>
+            <div class="flex-p">
+              <p id="emailUsuario">Email</p>
+              <p id="telefonoUsuario">Teléfono</p>
+            </div>
           </div>
           <button class="edit-button">✏️ Editar perfil</button>
         </div>
-
+        <!-- Botones de modo día y modo noche -->
         <div class="theme-switcher">
           <button id="modoDia" class="theme-button active">DAYTIME☀️</button>
           <button id="modoNoche" class="theme-button">NIGHTTIME🌙</button>
         </div>
-
+        <!-- Contenedor con los datos del usuario -->
         <div class="info-box">
           <div class="info-item" id="nombre-primero">Nombre:</div>
           <div class="info-item" id="segundo-nombre">Segundo nombre:</div>
@@ -111,7 +115,7 @@
           <div class="info-item" id="email-primero">E-mail:</div>
           <div class="info-item" id="telefono-primero">Teléfono:</div>
         </div>
-
+        <!-- Botones de soporte al usuario -->
         <div class="footer-support">
           <button class="support-button">🔎 Ayuda y Soporte</button>
           <button class="support-button">📞 Contáctanos</button>
@@ -119,7 +123,7 @@
         </div>
       </div>
     </div>
-
+    <!-- Modal para editar el perfil -->
     <div id="editProfileModal" class="modal">
       <div class="modal-content">
         <span class="close">&times;</span>
@@ -147,6 +151,7 @@
         </form>
       </div>
     </div>
+    <!-- Fin del modal -->
     <div id="alert" class="alert" style="display:none;"></div>
   </main>
   <footer class="text-muted">
