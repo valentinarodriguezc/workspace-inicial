@@ -1,0 +1,260 @@
+
+body {
+    background-color: #fcf8f9; /* Color de fondo en modo día */
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .container-p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 50px;
+  }
+  
+  .profile {
+    background-color: #C77C93; 
+    border-radius: 20px;
+    padding: 20px;
+    width: 600px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .avatar {
+    margin-bottom: 15px;
+  }
+  
+  .avatar-circle {
+    margin-top: 55%;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background-color: #ffffff; 
+    display: inline-block;
+  }
+  
+  .avatar-circle img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+  }
+  
+  .info {
+    display: grid; 
+    grid-template-columns: repeat(2, 1fr); 
+    margin-left: 9rem;
+    margin-right: 9em;
+    color: white;
+    margin-top: 2rem;
+  }
+  
+  #nombreUsuario {
+    margin-left: 1rem;
+    justify-content: center;
+  }
+  
+  #apellidoUsuario {
+    margin-right: 1rem;
+  }
+  
+  .edit-button {
+    background-color: #ffffff; 
+    color: #d64394; 
+    border: none;
+    border-radius: 50px;
+    padding: 5px 15px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-size: 12px;
+  }
+  
+  .info-box {
+    background-color: #e0e0e0;
+    padding: 15px;
+    border-radius: 10px;
+    margin: 15px 0;
+    text-align: left;
+  }
+  
+  .info-item {
+    background-color: #f0f0f0;
+    padding: 8px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+  
+  #telefonoUsuario {
+    display: inline-block;
+    margin-left: 5px; 
+  }
+  
+  .footer-support {
+    margin-top: 10px;
+  }
+  
+  .support-button {
+    background-color: #f0f0f0;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    width: 100%;
+    margin-bottom: 10px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+
+  .theme-switcher {
+    margin-top: 15px;
+  }
+  
+  .theme-button {
+    padding: 10px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    margin: 0 5px;
+    width: 120px;
+    font-size: 12px;
+    background-color:#0000001a;
+  }
+  
+  #modoDia.active {
+    background-color: #ffffff;
+    color: #000;
+  }
+  
+  #modoNoche.active {
+    background-color: #000000;
+    color: #1d1d1d;
+  }
+  
+  /* Estilos para el Modo Noche */
+  .noche {
+    background-color: #1b1b1b;
+    color: #ffffff;
+  }
+
+  .noche .profile {
+      background-color: #333333; 
+  }
+  
+  .noche .edit-button {
+      background-color: #444444; 
+      color: white;
+  }
+  
+  .noche .support-button {
+      background-color: #555555;
+      color: white; 
+  }
+  
+  .noche .theme-button {
+      background-color: #161616;
+      color: white;
+  }
+  
+  .noche .info-box {
+      background-color: #444444; 
+    }
+  
+  .noche .info-item {
+      background-color: #555555; 
+      color: white;
+    }
+  
+  .noche .support-button:hover {
+      background-color: #1f1f1f;
+      color: #fffefe; 
+  }
+  
+  /* Estilos para el modal */
+  .modal {
+      display: none; /* Oculto por defecto */
+      position: fixed; 
+      z-index: 1000; 
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.5); /* Fondo oscuro semi-transparente */
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .modal-content {
+      background-color: #C77C93;
+      margin-top: 20%; 
+      padding: 20px;
+      width: 80%; 
+      max-width: 500px; 
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+    
+    .modal-content h2 {
+      margin-top: 0;
+      margin-left: 9rem;
+      margin-bottom: 2.5rem;
+      justify-content: center;
+    }
+    
+    .modal-content form {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .modal-content form label {
+      margin-top: 10px;
+    }
+    
+    .modal-content form input {
+      padding: 10px;
+      margin-bottom: 10px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    
+    .modal-content form button {
+      padding: 10px;
+      background-color: #333333;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    
+    .modal-content form button:hover {
+      background-color: #5a5a5a;
+    }
+    
+    .avatar-modal {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background-color: #ffffff; /* Fondo del avatar */
+      display: inline-block;
+      margin-left: 8.5rem;
+      margin-bottom: 1.5rem;
+    }
+  
+    /* Botón de cerrar */
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      margin-top: 1rem;
+    }
+    
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+  

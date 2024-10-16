@@ -8,6 +8,7 @@
   <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
+  <link href="css/styles-profile.css" rel="stylesheet">
   <style>
     .bd-placeholder-img {
       font-size: 1.125rem;
@@ -61,9 +62,68 @@
     </div>
   </nav>
   <main>
-    <div class="container">
-      <div class="alert alert-danger text-center" role="alert">
-        <h4 class="alert-heading">Funcionalidad en desarrollo</h4>
+    <div class="container-p">
+      <div class="profile">
+        <div class="header">
+          <div class="avatar">
+            <div class="avatar-circle"><img src="img/img_perfil.png" alt="Imagen de perfil"></div>
+          </div>
+          <div class="info">
+            <h2 id="nombreUsuario">Nombre</h2>
+            <h2 id="apellidoUsuario">Apellido</h2>
+            <p id="emailUsuario">Email</p>
+            <p id="telefonoUsuario">Teléfono</p>
+          </div>
+          <button class="edit-button">✏️ Editar perfil</button>
+        </div>
+
+        <div class="theme-switcher">
+          <button id="modoDia" class="theme-button active">DAYTIME☀️</button>
+          <button id="modoNoche" class="theme-button">NIGHTTIME🌙</button>
+        </div>
+
+        <div class="info-box">
+          <div class="info-item" id="nombre-primero">Nombre:</div>
+          <div class="info-item" id="segundo-nombre">Segundo nombre:</div>
+          <div class="info-item" id="apellido-primero">Apellido:</div>
+          <div class="info-item" id="segundo-apellido">Segundo apellido:</div>
+          <div class="info-item" id="email-primero">E-mail:</div>
+          <div class="info-item" id="telefono-primero">Teléfono:</div>
+        </div>
+
+        <div class="footer-support">
+          <button class="support-button">🔎 Ayuda y Soporte</button>
+          <button class="support-button">📞 Contáctanos</button>
+          <button class="support-button">🔒 Política de Privacidad</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="editProfileModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Editar Perfil</h2>
+        <form id="editProfileForm">
+          <label for="nombre">Nombre:<span class="text-danger">*</span></label>
+          <input type="text" id="nombreInput" name="nombre" required>
+          
+          <label for="segundo-nombre">Segundo Nombre:</label>
+          <input type="text" id="segundoNombreInput" name="segundo-nombre">
+          
+          <label for="apellido">Apellido:<span class="text-danger">*</span></label>
+          <input type="text" id="apellidoInput" name="apellido" required>
+          
+          <label for="segundo-apellido">Segundo Apellido:</label>
+          <input type="text" id="segundoApellidoInput" name="segundo-apellido">
+          
+          <label for="email">E-mail:<span class="text-danger">*</span></label>
+          <input type="email" id="emailInput" name="email" required>
+          
+          <label for="telefono">Teléfono:<span class="text-danger">*</span></label>
+          <input type="tel" id="telefonoInput" name="telefono">
+          
+          <button type="submit">Guardar Cambios</button>
+        </form>
       </div>
     </div>
   </main>
