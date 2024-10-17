@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
         let segundoApellido = localStorage.getItem('segundo-apellido') || '';
         let email = localStorage.getItem('email') || '';
         let telefono = localStorage.getItem('telefono') || '';
+        let perfilImagen = localStorage.getItem('perfilImagen');
 
         // Actualizar la interfaz con los datos almacenados
         document.getElementById('nombre-primero').textContent = 'Nombre: ' + nombre;
@@ -22,6 +23,11 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('segundo-apellido').textContent = 'Segundo apellido: ' + segundoApellido;
         document.getElementById('email-primero').textContent = 'E-mail: ' + email;
         document.getElementById('telefono-primero').textContent = 'Teléfono: ' + telefono;
+
+        // Actualizar la imagen de perfil si hay una en localStorage
+        if (perfilImagen) {
+            document.querySelector('.avatar-circle img').src = perfilImagen;
+        }
 
         // También actualiza la parte superior del perfil
         document.getElementById('nombreUsuario').textContent = nombre;
@@ -84,6 +90,21 @@ document.addEventListener('DOMContentLoaded', function() {
         localStorage.setItem('telefono', updatedTelefono);
         localStorage.setItem('segundo-nombre', updatedSegNombre);
         localStorage.setItem('segundo-apellido', updatedSegApellido);
+
+        // Actualizar la imagen de perfil si se ha seleccionado una nueva
+           let fileInput = document.getElementById('fileInput');
+           let file = fileInput.files[0];
+           if (file) {
+               let reader = new FileReader();
+               reader.onload = function(e) {
+                   let imageDataUrl = e.target.result;
+                 // Guardar la nueva imagen en localStorage
+                   localStorage.setItem('perfilImagen', imageDataUrl);
+                // Actualizar la imagen en la interfaz
+                   document.querySelector('.avatar-circle img').src = imageDataUrl;
+               };
+               reader.readAsDataURL(file); // Que lea el archivo como Data URL
+           }
 
         // Actualizar datos en la info (parte superior)
         document.getElementById('nombreUsuario').textContent = updatedNombre;
