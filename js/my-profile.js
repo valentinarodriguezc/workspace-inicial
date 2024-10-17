@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let modal = document.getElementById('editProfileModal');
     let closeModal = document.querySelector('.close');
 
-    // obtener el email almacenado en localStorage para rellenar
+    // Obtener el email almacenado en localStorage para rellenar
     document.getElementById('emailInput').value = localStorage.getItem('email') || '';
 
     // Cuando se haga clic en "Editar perfil"
@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('nombreUsuario').textContent = updatedNombre;
         document.getElementById('emailUsuario').textContent = updatedEmail;
         document.getElementById('apellidoUsuario').textContent = updatedApellido;
-        //document.getElementById('telefonoUsuario').textContent = updatedTelefono;
+        document.getElementById('telefonoUsuario').textContent = updatedTelefono;
 
         // Actualizar datos en la info-box (interfaz)
         document.getElementById('nombre-primero').textContent = 'Nombre: ' + updatedNombre;
@@ -140,5 +140,3 @@ document.addEventListener('DOMContentLoaded', function() {
         modoDiaBtn.classList.remove('active');
     });
 });
-
-
