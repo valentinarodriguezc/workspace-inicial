@@ -189,57 +189,52 @@ a.custom-card:hover {
   color: orange;
 }
 
-.cards{
-
+.cards {
   transition: all 0.2s ease;
   cursor: pointer;
-  
-
 }
-  
 
-.cards:hover{
-
+.cards:hover {
   box-shadow: 5px 6px 6px 2px #e9ecef;
   transform: scale(1.1);
 }
 
-.userLogged{
+.userLogged {
   color: white;
   font-weight: 500;
 }
 
 .card {
-  max-width: 600px;  /* Ajusta el tamaño máximo de la tarjeta */
-  margin: 20px auto; /* Centramos la tarjeta horizontalmente */
+  max-width: 600px;
+  margin: 20px auto;
 }
 
 .carousel-inner img {
-  width: 100%;  /* Las imágenes ocuparán el 100% del contenedor del card */
-  height: 300px; /* Ajustamos la altura de las imágenes */
-  object-fit: cover; /* Para que las imágenes mantengan la proporción dentro del contenedor */
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
 }
 
 .fa-star {
-  font-size: 20px; /* Ajusta el tamaño según sea necesario */
-  color: lightgray; /* Color por defecto de las estrellas no seleccionadas */
+  font-size: 20px;
+  color: lightgray;
 }
 
 .fa-star.checked {
-  color: gold; /* Color de las estrellas seleccionadas */
+  color: gold;
 }
 
 .comment {
-  border-bottom: 1px solid #ccc; /* Línea divisoria entre comentarios */
-  padding: 10px 15px; /* Espaciado entre comentarios */
-  margin: 10px 0; /* Espaciado vertical entre comentarios */
-  background-color: #f9f9f9; /* Fondo suave para los comentarios */
-  border-radius: 5px; /* Bordes redondeados para un estilo más suave */
+  border-bottom: 1px solid #ccc;
+  padding: 10px 15px;
+  margin: 10px 0;
+  background-color: #f9f9f9;
+  border-radius: 5px;
 }
 
 .comments-section {
-  margin-left: 60px; /* Margen a la izquierda para toda la sección de comentarios */
-  margin-right: 60px; /* Margen a la derecha para toda la sección de comentarios */
+  margin-left: 60px;
+  margin-right: 60px;
 }
 
 .opinion {
@@ -248,9 +243,6 @@ a.custom-card:hover {
   width: 100%;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   margin: 20px auto;
-}
-
-.opinion {
   font-size: 18px;
   margin-bottom: 10px;
   color: #333;
@@ -263,34 +255,24 @@ a.custom-card:hover {
 
 .rating-form .stars {
   display: flex;
-  flex-direction: row-reverse; /* Esto mantiene el orden correcto en el formulario */
+  flex-direction: row-reverse;
   justify-content: flex-end;
   margin-bottom: 10px;
 }
 
 .stars input[type="radio"] {
-  display: none; /* Ocultar los botones de radio */
+  display: none;
 }
 
 .stars label {
   font-size: 30px;
-  color: #ddd; /* Estrellas grises por defecto */
+  color: #ddd;
   cursor: pointer;
 }
 
-.stars input[type="radio"]:checked ~ label {
-  color: gold; /* Estrellas doradas cuando están seleccionadas */
-}
-
-/* Cambia el color de las estrellas seleccionadas y las anteriores */
-.stars input[type="radio"]:checked + label,
+.stars input[type="radio"]:checked ~ label,
 .stars input[type="radio"]:checked + label ~ label {
-    color: gold;
-}
-
-.stars label:hover,
-.stars label:hover ~ label {
-  color: gold; /* Efecto hover, las estrellas doradas al pasar el ratón */
+  color: gold;
 }
 
 textarea {
@@ -311,7 +293,7 @@ textarea {
   cursor: pointer;
   border-radius: 5px;
   font-size: 12px;
-  padding: 5px 10px; 
+  padding: 5px 10px;
   width: 90px;
   height: 40px;
   margin-left: auto;
@@ -320,19 +302,17 @@ textarea {
 button:hover {
   background-color: #1e68b8;
 }
-/* Estilos para los productos relacionados */
-.cursor-active {
-  cursor: pointer; /* Cambia el cursor a puntero para indicar que es interactivo */
-  transition: transform 0.2s ease, box-shadow 0.2s ease; /* Añade una transición suave para los efectos */
-}
 
+.cursor-active {
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
 
 .cursor-active:hover {
-  transform: scale(1.05); /* Agranda la tarjeta cuando se pasa el mouse */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Añade una sombra más visible al pasar el mouse */
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Modo oscuro */
 .dark-mode {
   background-color: #121212;
   color: #ffffff;
@@ -341,44 +321,151 @@ button:hover {
 .dark-mode .card {
   background-color: #1e1e1e;
   border-color: #333;
-  color:white;
-}
-
-.comments-section {
-  color:black;
-}
-
-.comment mb-4 {
-  color: black;
-
-}
-
-.mb-4 {
-  color:black;
-  margin-left: 60px;
-  margin-right: 60px;
-}
-
-.form-switch {
-  margin-left: 20px;
-}
-
-.form-check-label {
   color: white;
 }
 
-.comments-section {
-  background-color: #E0E0E0;
-}
-
-#comentarios {
-  background-color: #E0E0E0;
-}
-
-.comentarios {
-  margin-left: 60px;
-}
-
+.comments-section,
+#comentarios,
+.comentarios,
 .productosRelacionados {
-  margin-left: 60px;
+  background-color: #E0E0E0;
+}
+
+.cart-item {
+  background-color: #f8f9fa;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.cart-item img {
+  border-radius: 4px;
+}
+
+/* Contenedor principal del carrito */
+.cart-container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos para cada item en el carrito */
+.cart-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  padding: 15px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.cart-item img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-right: 20px;
+}
+
+.cart-item-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.cart-item-info h5 {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0;
+  color: #333;
+}
+
+.cart-item-info p {
+  font-size: 14px;
+  color: #666;
+}
+
+.cart-item-info .price {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  margin-top: 5px;
+}
+
+/* Contenedor de cantidad y total */
+.cart-item-quantity {
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+}
+
+.quantity-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  width: 30px;
+  height: 30px;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin: 0 5px;
+}
+
+.quantity-btn:hover {
+  background-color: #0056b3;
+}
+
+.quantity-input {
+  width: 40px;
+  text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 5px
+}
+
+.cart-items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.cart-item-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  margin-right: 15px;
+  border-radius: 8px;
+}
+
+.cart-item-info {
+  flex: 1;
+}
+
+.price, .quantity {
+  margin: 5px 0;
+}
+
+.cart-summary-card {
+  background-color: #ffe4e1; /* Color de fondo rosa */
+  border-radius: 8px;
+}
+
+.total {
+  font-weight: bold;
+  font-size: 1.2rem;
 }

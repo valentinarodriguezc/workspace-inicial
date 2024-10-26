@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -10,7 +9,6 @@
   <link href="css/font-awesome.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
 </head>
-
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-1">
     <div class="container">
@@ -29,13 +27,9 @@
           <li class="nav-item">
             <a class="nav-link" href="sell.html">Vender</a>
           </li>
-          <li class="nav-item">
-          </li>
         </ul>
-        <!-- Aquí va el menú desplegable de usuario -->
         <div class="dropdown">
           <button class="btn btn-secondary dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-            <!-- Aquí debería ir el nombre de usuario -->
             Usuario
           </button>
           <ul class="dropdown-menu" aria-labelledby="userDropdown">
@@ -45,7 +39,6 @@
             <li><a class="dropdown-item" href="#" id="logoutBtn">Cerrar sesión</a></li>
           </ul>
         </div>
-        <!-- Fin del menú desplegable de usuario -->
         <div class="form-check form-switch">
           <input class="form-check-input" type="checkbox" role="switch" id="themeSwitch">
           <label class="form-check-label" for="themeSwitch">Modo Noche</label>
@@ -53,28 +46,34 @@
       </div>
     </div>
   </nav>
+
+  <main class="container mt-5">
+    <h1>Carrito de Compras</h1>
+    <div class="row">
+      <!-- Productos del carrito (columna izquierda) -->
+      <div class="col-md-8">
+        <div id="cartItems" class="cart-items-list"></div> <!-- Contenedor para los productos del carrito -->
       </div>
-      <div class="user-options"></div> 
-      <div class="userLogged"></div>  
-      </div>
-      </div>
-    </div>
-  </nav>
-  <main>
-    <div class="container">
-      <div class="alert alert-danger text-center" role="alert">
-        <h4 class="alert-heading">Funcionalidad en desarrollo</h4>
+      <!-- Resumen del carrito (columna derecha) -->
+      <div class="col-md-4">
+        <div class="card cart-summary-card p-3">
+          <div id="cartTotal" class="mb-3"></div> <!-- Contenedor para el total del carrito -->
+          <button id="emptyCartBtn" class="btn btn-danger w-100 mb-2">Vaciar Carrito</button> <!-- Botón para vaciar el carrito -->
+          <a href="index.html" class="btn btn-primary w-100">Volver a la tienda</a>
+        </div>
       </div>
     </div>
   </main>
+
   <footer class="text-muted">
     <div class="container">
       <p class="float-end">
         <a href="#">Volver arriba</a>
       </p>
-      <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a></p>
+      <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jóvenes a Programar</a></p>
     </div>
   </footer>
+
   <div id="spinner-wrapper">
     <div class="lds-ring">
       <div></div>
@@ -83,12 +82,54 @@
       <div></div>
     </div>
   </div>
-  <script src="js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const cartItemsContainer = document.getElementById("cartItems");
+        const cartTotalContainer = document.getElementById("cartTotal");
+        const emptyCartBtn = document.getElementById("emptyCartBtn");
+        
+        const updateCartDisplay = () => {
+            const cart = JSON.parse(localStorage.getItem("cart")) || []; // Recuperar el carrito
+            let total = 0;
+            cartItemsContainer.innerHTML = ''; // Limpiar contenedor
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = '<p>No hay productos en el carrito.</p>';
+                cartTotalContainer.innerHTML = ''; // Limpiar total si no hay productos
+            } else {
+                cart.forEach(product => {
+                    total += product.price * product.quantity; // Calcular total
+                    cartItemsContainer.innerHTML += `
+                        <div class="cart-item mb-3">
+                            <img src="${product.image}" class="cart-item-image" alt="${product.name}">
+                            <div class="cart-item-info">
+                                <h5>${product.name}</h5>
+                                <p class="price">Precio: ${product.price} USD</p>
+                                <p class="quantity">Cantidad: ${product.quantity}</p>
+                                <p><strong>Subtotal: ${(product.price * product.quantity).toFixed(2)} USD</strong></p>
+                            </div>
+                        </div>
+                    `;
+                });
+                // Mostrar total del carrito
+                cartTotalContainer.innerHTML = `<h4 class="total">Total: ${total.toFixed(2)} USD</h4>`;
+            }
+        };
+
+        // Inicializar la visualización del carrito
+        updateCartDisplay();
+
+        // Función para vaciar el carrito
+        emptyCartBtn.addEventListener("click", () => {
+            localStorage.removeItem("cart"); // Eliminar el carrito de localStorage
+            updateCartDisplay(); // Actualizar la visualización
+        });
+    });
+  </script>
   <script src="js/init.js"></script>
-  <script src="js/cart.js"></script>
   <script src="js/login.js"></script>
   <script src="js/theme.js"></script>
   <script src="js/index.js"></script>
+  <script src="js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>

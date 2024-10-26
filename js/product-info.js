@@ -1,6 +1,7 @@
-let relatedProducts = [];  // Definir como variable global para accederla fuera del bloque
+let relatedProducts = []; // Definir como variable global para accederla fuera del bloque
+
 document.addEventListener("DOMContentLoaded", async () => {
-    let productID = localStorage.getItem("productID");  // Recuperar el ID del producto
+    let productID = localStorage.getItem("productID"); // Recuperar el ID del producto
     let productInfo = document.getElementById("product-info");
 
     const responseID = await getJSONData(PRODUCT_INFO_URL + productID + EXT_TYPE);
@@ -23,83 +24,107 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         // Mostrar los detalles del producto dentro de una tarjeta (card)
         productInfo.innerHTML = `
-            <div class="card">
-                <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-                    <div class="carousel-indicators">
-                        ${product.images.map((_, index) => `
-                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="${index}" class="${index === 0 ? 'active' : ''}" aria-current="true" aria-label="Slide ${index + 1}"></button>
-                        `).join('')}
-                    </div>
-                    <div class="carousel-inner">
-                        ${imagesHTML}
-                    </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
+        <div class="card">
+            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    ${product.images.map((_, index) => `
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="${index}" class="${index === 0 ? 'active' : ''}" aria-current="true" aria-label="Slide ${index + 1}"></button>
+                    `).join('')}
                 </div>
-
-                <div class="card-body">
-                    <h5 class="card-title">${product.name}</h5>
-                    <p class="card-text"><strong>Descripción:</strong> ${product.description}</p>
-                    <p class="card-text"><strong>Categoría:</strong> ${product.category}</p>
-                    <p class="card-text"><strong>Vendidos:</strong> ${product.soldCount}</p>
-                    <p class="card-text"><strong>Precio:</strong> ${product.currency}: ${product.cost}</p>
+                <div class="carousel-inner">
+                    ${imagesHTML}
                 </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
             </div>
-        `;
-  // Verificar si hay productos relacionados
-  if (!product.relatedProducts || !Array.isArray(product.relatedProducts) || product.relatedProducts.length === 0) {
-    console.error("No hay productos relacionados disponibles.");
-    return;
-}
-
-const relatedProductIDs = product.relatedProducts;
-console.log("Productos relacionados:", relatedProductIDs);
-
-// Crear las promesas para obtener los productos relacionados
-const relatedProductsPromises = relatedProductIDs.map(relatedProduct => 
-    getJSONData(PRODUCT_INFO_URL + relatedProduct.id + EXT_TYPE)
-);
-const relatedProductsResponses = await Promise.all(relatedProductsPromises);
-
-// Asignar los productos relacionados a la variable global
-relatedProducts = relatedProductsResponses.map(response => response.data);
-console.log("Productos relacionados procesados:", relatedProducts);
-
-// Generar HTML de productos relacionados
-let listaProductosRelacionados = document.getElementById("listaProductosRelacionados");
-if (!listaProductosRelacionados) {
-    console.error("No se encontró el contenedor de productos relacionados.");
-    return;
-}
-
-let relatedProductsHTML = relatedProducts.map(relatedProduct => `
-    <div class="col-md-3">
-         <div class="card mb-4 shadow-sm cursor-active" onclick="setProductID(${relatedProduct.id})">
-            <img src="${relatedProduct.images[0] || 'ruta/por_defecto.jpg'}" alt="${relatedProduct.name}" class="card-img-top img-fluid" />
+    
             <div class="card-body">
-            <h5 class="card-title">${relatedProduct.name}</h5>
-             <p class="card-text"><strong>Precio:</strong> ${relatedProduct.cost} ${relatedProduct.currency}</p>
-                <p class="card-text"><strong>Vendidos:</strong> ${relatedProduct.soldCount}</p>
+                <h5 class="card-title">${product.name}</h5>
+                <p class="card-text"><strong>Descripción:</strong> ${product.description}</p>
+                <p class="card-text"><strong>Categoría:</strong> ${product.category}</p>
+                <p class="card-text"><strong>Vendidos:</strong> ${product.soldCount}</p>
+                <p class="card-text"><strong>Precio:</strong> ${product.currency}: ${product.cost}</p>
+                <button id="buyButton" class="btn btn-primary">Comprar</button>
             </div>
         </div>
-    </div>
-`).join('');
+    `;
 
-listaProductosRelacionados.innerHTML = relatedProductsHTML;
+    document.getElementById("buyButton").addEventListener("click", function() {
+        const cartProduct = {
+            id: product.id,
+            name: product.name,
+            price: product.cost,
+            quantity: 1,
+            image: product.images[0] // Agrega la URL de la imagen principal
+        };
+        
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        const existingProductIndex = cart.findIndex(item => item.id === cartProduct.id);
+        
+        if (existingProductIndex > -1) {
+            cart[existingProductIndex].quantity += 1;
+        } else {
+            cart.push(cartProduct);
+        }
+        
+        localStorage.setItem("cart", JSON.stringify(cart));
+        window.location.href = "cart.html";
+    });
+    
 
+        // Verificar si hay productos relacionados
+        if (!product.relatedProducts || !Array.isArray(product.relatedProducts) || product.relatedProducts.length === 0) {
+            console.error("No hay productos relacionados disponibles.");
+            return;
+        }
+
+        const relatedProductIDs = product.relatedProducts;
+        console.log("Productos relacionados:", relatedProductIDs);
+
+        // Crear las promesas para obtener los productos relacionados
+        const relatedProductsPromises = relatedProductIDs.map(relatedProduct => 
+            getJSONData(PRODUCT_INFO_URL + relatedProduct.id + EXT_TYPE)
+        );
+        const relatedProductsResponses = await Promise.all(relatedProductsPromises);
+
+        // Asignar los productos relacionados a la variable global
+        relatedProducts = relatedProductsResponses.map(response => response.data);
+        console.log("Productos relacionados procesados:", relatedProducts);
+
+        // Generar HTML de productos relacionados
+        let listaProductosRelacionados = document.getElementById("listaProductosRelacionados");
+        if (!listaProductosRelacionados) {
+            console.error("No se encontró el contenedor de productos relacionados.");
+            return;
+        }
+
+        let relatedProductsHTML = relatedProducts.map(relatedProduct => `
+            <div class="col-md-3">
+                <div class="card mb-4 shadow-sm cursor-active" onclick="setProductID(${relatedProduct.id})">
+                    <img src="${relatedProduct.images[0] || 'ruta/por_defecto.jpg'}" alt="${relatedProduct.name}" class="card-img-top img-fluid" />
+                    <div class="card-body">
+                        <h5 class="card-title">${relatedProduct.name}</h5>
+                        <p class="card-text"><strong>Precio:</strong> ${relatedProduct.cost} ${relatedProduct.currency}</p>
+                        <p class="card-text"><strong>Vendidos:</strong> ${relatedProduct.soldCount}</p>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+
+        listaProductosRelacionados.innerHTML = relatedProductsHTML;
 
         // Agregar la sección de comentarios
         const commentsSection = document.createElement("div");
         commentsSection.id = "comments-section";
         commentsSection.classList.add("mt-4");
         commentsSection.innerHTML = `
-            <h5 class= "comentarios" >Comentarios:</h5>
+            <h5 class="comentarios">Comentarios:</h5>
             ${productComments.map(comment => `
                 <div class="comment mb-3 comments-section">
                     <h6>${comment.user}</h6>
@@ -118,8 +143,8 @@ listaProductosRelacionados.innerHTML = relatedProductsHTML;
 
 // Función para redirigir al producto seleccionado
 function setProductID(id) {
-    localStorage.setItem("productID", id);  // Guardar el ID del producto en localStorage
-    window.location = "product-info.html";  // Redirigir a la página de detalles del producto
+    localStorage.setItem("productID", id); // Guardar el ID del producto en localStorage
+    window.location = "product-info.html"; // Redirigir a la página de detalles del producto
 }
 
 // Función para generar estrellas según la calificación
@@ -130,13 +155,13 @@ function getStars(score) {
     }
     return starsHTML;
 }
-//Agregar un comentario a la seccion de comentarios 
 
+// Agregar un comentario a la sección de comentarios 
 const opinionForm = document.getElementById('opinion-form');
-// Manejar el envío del formulario
-opinionForm.addEventListener( 'submit', function(event) {
 
-    event.preventDefault();  //Prevenir el comportamiento por defecto de envío
+// Manejar el envío del formulario
+opinionForm.addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevenir el comportamiento por defecto de envío
 
     // Obtener la calificación seleccionada
     const rating = document.querySelector('input[name="rating"]:checked');
@@ -168,8 +193,7 @@ opinionForm.addEventListener( 'submit', function(event) {
     `;
 
     // Agregar el nuevo comentario a la sección de comentarios
-    const commentsSections = document.getElementById('comments-section');
-    commentsSections.innerHTML += commentHtml;
+    commentsSection.innerHTML += commentHtml;
 
     // Limpiar el formulario
     opinionForm.reset();
