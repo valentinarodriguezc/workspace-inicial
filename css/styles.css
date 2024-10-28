@@ -287,7 +287,7 @@ textarea {
 }
 
 .my-button {
-  background-color: #fafafa;
+  background-color: #1e68b8;
   color: rgb(8, 0, 0);
   border: rgb(57, 52, 52);
   cursor: pointer;
@@ -300,7 +300,7 @@ textarea {
 }
 
 button:hover {
-  background-color: #1e68b8;
+  background-color: #3480d1;
 }
 
 .cursor-active {
@@ -324,22 +324,10 @@ button:hover {
   color: white;
 }
 
-/*.comments-section,
-#comentarios,
-.comentarios,
-.productosRelacionados {
-  background-color: #E0E0E0;
-}*/
-
-/*.comments-section {
-  background-color: #E0E0E0;
-}*/
-
-
-/*#comentarios {
-  background-color: #E0E0E0;
-}*/
-
+.dark-mode .comments-section,
+.dark-mode #comentarios {
+  background-color: #8b8b8b;
+}
 
 .comentarios {
   margin-left: 60px;
