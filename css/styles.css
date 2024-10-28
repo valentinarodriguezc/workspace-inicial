@@ -366,3 +366,17 @@ button:hover {
 .form-check-label {
   color: white;
 }
+
+.alert {
+  padding: 15px;
+  background-color: #0d0949; 
+  color: white; 
+  position: fixed; 
+  z-index: 1000; 
+  left: 50%;
+  transform: translateX(-50%); 
+  top: 20px; 
+  border-radius: 5px;
+  transition: opacity 0.5s ease; 
+  opacity: 0; 
+}

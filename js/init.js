@@ -7,6 +7,24 @@ const CART_INFO_URL = "https://japceibal.github.io/emercado-api/user_cart/";
 const CART_BUY_URL = "https://japceibal.github.io/emercado-api/cart/buy.json";
 const EXT_TYPE = ".json";
 
+
+// Función para alerta
+function showAlert(message) {
+  let alertBox = document.getElementById('alert');
+  alertBox.textContent = message;
+  alertBox.style.display = 'block';
+  alertBox.style.opacity = 1; 
+  
+  // Timer para que desaparezca
+  setTimeout(() => {
+      alertBox.style.opacity = 0; 
+      setTimeout(() => {
+          alertBox.style.display = 'none'; 
+      }, 500); 
+  }, 3000);
+};
+
+
 let showSpinner = function(){
   document.getElementById("spinner-wrapper").style.display = "block";
 }
