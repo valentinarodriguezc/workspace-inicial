@@ -51,11 +51,12 @@ document.addEventListener("DOMContentLoaded", async () => {
                 <p class="card-text"><strong>Vendidos:</strong> ${product.soldCount}</p>
                 <p class="card-text"><strong>Precio:</strong> ${product.currency}: ${product.cost}</p>
                 <button id="buyButton" class="btn btn-primary">Comprar</button>
+                <button id="addToCart" class="btn btn-primary">Agregar al Carrito</button>
             </div>
         </div>
     `;
-    
-    document.getElementById("buyButton").addEventListener("click", function() {
+
+     function addToCart() {
         // Obtener la información del producto que se va a comprar, definiendo un objeto con la info del mismo
         const productToBuy = {
             id: product.id, 
@@ -69,12 +70,17 @@ document.addEventListener("DOMContentLoaded", async () => {
         let cart = JSON.parse(localStorage.getItem('cart')) || []; 
         cart.push(productToBuy); // Añadir el productor al carrito de compras
         localStorage.setItem('cart', JSON.stringify(cart)); // Convertir a JSON y guardar en el localStorage
-    
-        // Mostrar un mensaje de confirmación
-        showAlert("Producto añadido al carrito.");
+     }
 
+    document.getElementById("buyButton").addEventListener("click", function() {
+        addToCart(); // Llama a la función
+        window.location.href = "cart.html"; 
     });
-    
+    document.getElementById("addToCart").addEventListener("click", function() {
+        addToCart(); // Llama a la función
+        showAlert("Producto añadido al carrito."); // Mostrar un mensaje de confirmación
+    });
+
 
         // Verificar si hay productos relacionados
         if (!product.relatedProducts || !Array.isArray(product.relatedProducts) || product.relatedProducts.length === 0) {
