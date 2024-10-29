@@ -489,3 +489,20 @@ button:hover {
   transition: opacity 0.5s ease; 
   opacity: 0; 
 }
+
+#listaProductosRelacionados{
+  margin-left: 35px;
+}
+
+.quantity-control button {
+  display: inline-block !important;
+  min-width: 30px;
+}
+
+.quantity {
+  color: black;
+}
+
+.remove-product{
+  width: 20%;
+}
