@@ -63,12 +63,21 @@ document.addEventListener("DOMContentLoaded", async () => {
             name: product.name,
             cost: product.cost,
             currency: product.currency,
+            quantity: 1,
             image: product.images[0], 
         };
     
         // Cargar el carrito desde localStorage (de existir) o inicializar un array vacío
         let cart = JSON.parse(localStorage.getItem('cart')) || []; 
-        cart.push(productToBuy); // Añadir el productor al carrito de compras
+
+        // Verificar si el producto que se agrega ya existe en el carrito
+        const existingProduct = cart.findIndex(item => item.id === productToBuy.id); 
+        if (existingProduct > -1) {
+            cart[existingProduct].quantity += 1;
+        } else {
+            cart.push(productToBuy); // Añadir el producto al carrito de compras
+        }
+
         localStorage.setItem('cart', JSON.stringify(cart)); // Convertir a JSON y guardar en el localStorage
      }
 
