@@ -51,33 +51,36 @@ document.addEventListener("DOMContentLoaded", async () => {
                 <p class="card-text"><strong>Vendidos:</strong> ${product.soldCount}</p>
                 <p class="card-text"><strong>Precio:</strong> ${product.currency}: ${product.cost}</p>
                 <button id="buyButton" class="btn btn-primary">Comprar</button>
+                <button id="addToCart" class="btn btn-primary">Añadir al Carrito</button>
             </div>
         </div>
     `;
 
-    document.getElementById("buyButton").addEventListener("click", function() {
-        const cartProduct = {
-            id: product.id,
+    function addToCart() {
+        // Obtener la información del producto que se va a comprar, definiendo un objeto con la info del mismo
+        const productToBuy = {
+            id: product.id, 
             name: product.name,
-            price: product.cost,
-            quantity: 1,
-            image: product.images[0] // Agrega la URL de la imagen principal
+            cost: product.cost,
+            currency: product.currency,
+            image: product.images[0], 
         };
-        
-        let cart = JSON.parse(localStorage.getItem("cart")) || [];
-        const existingProductIndex = cart.findIndex(item => item.id === cartProduct.id);
-        
-        if (existingProductIndex > -1) {
-            cart[existingProductIndex].quantity += 1;
-        } else {
-            cart.push(cartProduct);
-        }
-        
-        localStorage.setItem("cart", JSON.stringify(cart));
-        window.location.href = "cart.html";
+    
+        // Cargar el carrito desde localStorage (de existir) o inicializar un array vacío
+        let cart = JSON.parse(localStorage.getItem('cart')) || []; 
+        cart.push(productToBuy); // Añadir el productor al carrito de compras
+        localStorage.setItem('cart', JSON.stringify(cart)); // Convertir a JSON y guardar en el localStorage
+     }
+
+    document.getElementById("buyButton").addEventListener("click", function() {
+        addToCart(); // Llamar a la función
+        window.location.href = "cart.html"; // Redirigir al carrito
+    });
+    document.getElementById("addToCart").addEventListener("click", function() {
+        addToCart(); // Llamar a la función
+        showAlert("Producto añadido al carrito."); // Mostrar un mensaje de confirmación
     });
     
-
         // Verificar si hay productos relacionados
         if (!product.relatedProducts || !Array.isArray(product.relatedProducts) || product.relatedProducts.length === 0) {
             console.error("No hay productos relacionados disponibles.");

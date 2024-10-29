@@ -120,21 +120,6 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('email-primero').textContent = 'E-mail: ' + updatedEmail;
         document.getElementById('telefono-primero').textContent = 'Teléfono: ' + updatedTelefono;
 
-        // Función para la alerta
-        function showAlert(message) {
-            let alertBox = document.getElementById('alert');
-            alertBox.textContent = message;
-            alertBox.style.display = 'block';
-            alertBox.style.opacity = 1; 
-        
-            // Timer para que desaparezca
-            setTimeout(() => {
-                alertBox.style.opacity = 0; 
-                setTimeout(() => {
-                    alertBox.style.display = 'none'; 
-                }, 500); 
-            }, 3000);
-        }
         // Mostrar la alerta 
         showAlert("Cambios guardados correctamente");
 
