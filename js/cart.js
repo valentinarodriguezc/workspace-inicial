@@ -1,8 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
     const cartItemsContainer = document.getElementById("cartItems");
     const cartTotalContainer = document.getElementById("cartTotal");
-    
+    const subtotalContainer = document.getElementById("subtotal");
     const emptyCartBtn = document.getElementById("emptyCartBtn");
+   
+
 
     // Guardar el carrito actualizado en localStorage
     const saveCart = (cart) => {
@@ -13,11 +15,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const updateCartDisplay = () => {
         const cart = JSON.parse(localStorage.getItem("cart")) || [];
         let total = 0;
+        let subtotal = 0; // Inicializar subtotal
         cartItemsContainer.innerHTML = '';
 
         if (cart.length === 0) {
             cartItemsContainer.innerHTML = '<p>No hay productos en el carrito.</p>';
+            subtotalContainer.innerHTML = '';
             cartTotalContainer.innerHTML = '';
+             // Limpiar subtotal si no hay productos
         } else {
             cart.forEach((product, index) => {
                 const subtotal = product.cost * product.quantity; // Calcular subtotal por producto
@@ -41,6 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 `;
                 cartItemsContainer.innerHTML += productHTML;
             });
+            subtotalContainer.innerHTML = `<h4>Subtotal: ${subtotal.toFixed(2)} USD</h4>`;
             cartTotalContainer.innerHTML = `<h4>Total: ${total.toFixed(2)} USD</h4>`;
         }
     };
