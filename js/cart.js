@@ -6,11 +6,18 @@ document.addEventListener("DOMContentLoaded", () => {
     const changeToDollars = 40; //Precio aprox de un 1 dolar en uy
     
     const emptyCartBtn = document.getElementById("emptyCartBtn");
+    const cartBadge = document.getElementById("cart-badge");
 
     // Guardar el carrito actualizado en localStorage
     const saveCart = (cart) => {
         localStorage.setItem("cart", JSON.stringify(cart));
     };
+     // Actualizar el badge del carrito
+     const updateCartBadge = () => {
+        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+        cartBadge.textContent = cart.reduce((total, product) => total + product.quantity, 0);
+    };
+
 
     // Actualizar la visualización del carrito
     const updateCartDisplay = () => {
@@ -46,6 +53,8 @@ document.addEventListener("DOMContentLoaded", () => {
             });
            updateTotalDisplay(total);
         }
+        // Actualizar el badge después de mostrar el carrito
+        updateCartBadge();
     };
 
     // Evento para aumentar, reducir o eliminar productos del carrito
@@ -87,8 +96,9 @@ currencySwitch.addEventListener("change", () => {
     const total = cart.reduce((acc, product) => acc + product.cost * product.quantity, 0);
     updateTotalDisplay(total);
 });
-    // Inicializar la visualización del carrito
+    // Inicializar la visualización del carrito y el badge
     updateCartDisplay();
+    updateCartBadge();
 
     // Función para vaciar el carrito
     emptyCartBtn.addEventListener("click", () => {

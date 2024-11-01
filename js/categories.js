@@ -6,6 +6,14 @@ let currentSortCriteria = undefined;
 let minCount = undefined;
 let maxCount = undefined;
 
+const cartBadge = document.getElementById("cart-badge");
+
+// Función para actualizar el badge del carrito
+const updateCartBadge = () => {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    cartBadge.textContent = cart.reduce((total, product) => total + product.quantity, 0);
+};
+
 function sortCategories(criteria, array){
     let result = [];
     if (criteria === ORDER_ASC_BY_NAME)
@@ -93,6 +101,7 @@ document.addEventListener("DOMContentLoaded", function(e){
             currentCategoriesArray = resultObj.data
             showCategoriesList()
             //sortAndShowCategories(ORDER_ASC_BY_NAME, resultObj.data);
+            updateCartBadge(); // Actualizar el badge al cargar la página
         }
     });
 
