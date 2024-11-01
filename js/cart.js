@@ -1,6 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
     const cartItemsContainer = document.getElementById("cartItems");
     const cartTotalContainer = document.getElementById("cartTotal");
+
+    const currencySwitch = document.getElementById("currencySwitch");
+    const changeToDollars = 40; //Precio aprox de un 1 dolar en uy
     
     const emptyCartBtn = document.getElementById("emptyCartBtn");
 
@@ -41,7 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 `;
                 cartItemsContainer.innerHTML += productHTML;
             });
-            cartTotalContainer.innerHTML = `<h4>Total: ${total.toFixed(2)} USD</h4>`;
+           updateTotalDisplay(total);
         }
     };
 
@@ -64,7 +67,26 @@ document.addEventListener("DOMContentLoaded", () => {
         saveCart(cart); // Guardar carrito actualizado
         updateCartDisplay(); // Actualizar visualización del carrito
     });
+ // Función para actualizar el total según la moneda seleccionada
+ const updateTotalDisplay = (total) => {
+    const selectedCurrency = currencySwitch.value;
+    let displayTotal;
 
+    if (selectedCurrency === "UYU") {
+        displayTotal = total * changeToDollars;
+        cartTotalContainer.innerHTML = `<h4>Total: ${displayTotal.toFixed(2)} UYU</h4>`;
+    } else {
+        displayTotal = total 
+        cartTotalContainer.innerHTML = `<h4>Total: ${displayTotal.toFixed(2)} USD</h4>`;
+    }
+};
+
+// Escuchar cambios en el switch de moneda
+currencySwitch.addEventListener("change", () => {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const total = cart.reduce((acc, product) => acc + product.cost * product.quantity, 0);
+    updateTotalDisplay(total);
+});
     // Inicializar la visualización del carrito
     updateCartDisplay();
 
