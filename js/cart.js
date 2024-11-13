@@ -38,13 +38,13 @@ document.addEventListener("DOMContentLoaded", () => {
                         <img src="${product.image}" class="cart-item-image" alt="${product.name}">
                         <div class="cart-item-info">
                             <h5>${product.name}</h5>
-                            <p class="price">Precio: ${product.cost} USD</p>
+                            <p class="price">Precio: ${product.cost} UYU</p>
                             <div class="quantity-control d-flex align-items-center">
                                 <button class="btn btn-sm btn-secondary decrease-quantity" data-index="${index}">-</button>
                                 <span class="quantity mx-2">${product.quantity}</span>
                                 <button class="btn btn-sm btn-secondary increase-quantity" data-index="${index}">+</button>
                             </div>
-                            <p><strong>Subtotal: ${(subtotal).toFixed(2)} USD</strong></p>
+                            <p><strong>Subtotal: ${(subtotal).toFixed(2)} UYU</strong></p>
                            
                         </div>
                     </div>
@@ -82,10 +82,10 @@ document.addEventListener("DOMContentLoaded", () => {
     let displayTotal;
 
     if (selectedCurrency === "UYU") {
-        displayTotal = total * changeToDollars;
+        displayTotal = total 
         cartTotalContainer.innerHTML = `<h4>Total: ${displayTotal.toFixed(2)} UYU</h4>`;
     } else {
-        displayTotal = total 
+        displayTotal = total / changeToDollars;
         cartTotalContainer.innerHTML = `<h4>Total: ${displayTotal.toFixed(2)} USD</h4>`;
     }
 };
