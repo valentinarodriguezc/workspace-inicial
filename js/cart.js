@@ -106,3 +106,51 @@ currencySwitch.addEventListener("change", () => {
         updateCartDisplay();
     });
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+    const shippingType = document.getElementById("shippingType");
+    const paymentMethod = document.getElementById("paymentMethod");
+    const checkoutBtn = document.getElementById("checkoutBtn");
+
+    // Función para calcular el total con envío
+    const calculateTotalWithShipping = (total) => {
+        let shippingCostPercentage;
+
+        switch (shippingType.value) {
+            case "premium":
+                shippingCostPercentage = 0.15;
+                break;
+            case "express":
+                shippingCostPercentage = 0.07;
+                break;
+            default:
+                shippingCostPercentage = 0.05;
+        }
+
+        const shippingCost = total * shippingCostPercentage;
+        return total + shippingCost;
+    };
+
+    // Actualiza el total cada vez que se cambia el tipo de envío
+    shippingType.addEventListener("change", () => {
+        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+        const total = cart.reduce((acc, product) => acc + product.cost * product.quantity, 0);
+        updateTotalDisplay(calculateTotalWithShipping(total));
+    });
+
+    // Función para finalizar compra
+    checkoutBtn.addEventListener("click", () => {
+        const street = document.getElementById("street").value;
+        const department = document.getElementById("department").value;
+        const zipcode = document.getElementById("zipcode").value;
+
+        if (!street || !department || !zipcode) {
+            alert("Por favor, completa todos los datos de la dirección.");
+            return;
+        }
+
+        alert("Compra finalizada con éxito. Gracias por tu compra!");
+        localStorage.removeItem("cart"); // Vacía el carrito al finalizar la compra
+        updateCartDisplay(); // Actualiza la visualización del carrito
+    });
+});
