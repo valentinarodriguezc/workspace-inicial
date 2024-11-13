@@ -6,7 +6,7 @@ let currentSortCriteria = undefined;
 let minCount = undefined;
 let maxCount = undefined;
 
-const cartBadge = document.getElementById("cart-badge");
+let cartBadge = document.getElementById("cart-badge");
 
 // Función para actualizar el badge del carrito
 const updateCartBadge = () => {

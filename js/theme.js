@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     // Elementos del DOM
-    const themeSwitch = document.getElementById("themeSwitch");
+    let themeSwitch = document.getElementById("themeSwitch");
     const body = document.body;
 
     // Función para aplicar el tema

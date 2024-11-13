@@ -1,12 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const cartItemsContainer = document.getElementById("cartItems");
-    const cartTotalContainer = document.getElementById("cartTotal");
+    let cartItemsContainer = document.getElementById("cartItems");
+    let cartTotalContainer = document.getElementById("cartTotal");
 
-    const currencySwitch = document.getElementById("currencySwitch");
+    let currencySwitch = document.getElementById("currencySwitch");
     const changeToDollars = 40; //Precio aprox de un 1 dolar en uy
     
-    const emptyCartBtn = document.getElementById("emptyCartBtn");
-    const cartBadge = document.getElementById("cart-badge");
+    let emptyCartBtn = document.getElementById("emptyCartBtn");
+    let cartBadge = document.getElementById("cart-badge");
 
     // Guardar el carrito actualizado en localStorage
     const saveCart = (cart) => {

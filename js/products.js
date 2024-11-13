@@ -5,7 +5,7 @@ let minPrice = undefined;
 let maxPrice = undefined;
 let currentSortCriteria = undefined;
 
-const cartBadge = document.getElementById("cart-badge"); // Obtener el badge del carrito
+let cartBadge = document.getElementById("cart-badge"); // Obtener el badge del carrito
 
 function setProductID(id) {
   localStorage.setItem("productID", id);  // Guardar el ID del producto

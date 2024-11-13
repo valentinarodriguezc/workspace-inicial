@@ -187,7 +187,7 @@ opinionForm.addEventListener('submit', function(event) {
 
     // Obtener la calificación seleccionada
     const rating = document.querySelector('input[name="rating"]:checked');
-    const commentText = document.getElementById('comentarios').value;
+    let commentText = document.getElementById('comentarios').value;
 
     if (!rating || !commentText) {
         alert('Seleccionar una calificación y escribir un comentario.');
@@ -204,7 +204,7 @@ opinionForm.addEventListener('submit', function(event) {
     };
 
     // Crear el HTML para el nuevo comentario
-    const commentsSection = document.getElementById('comments-section');
+    let commentsSection = document.getElementById('comments-section');
     const commentHtml = `
         <div class="comment mb-4">
             <h6>${newComment.user}</h6>
