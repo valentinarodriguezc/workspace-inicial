@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -10,7 +9,6 @@
   <link href="css/font-awesome.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
 </head>
-
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-1">
     <div class="container">
@@ -29,13 +27,17 @@
           <li class="nav-item">
             <a class="nav-link" href="sell.html">Vender</a>
           </li>
-          <li class="nav-item">
-          </li>
+          <!-- Aquí se añade el nuevo ícono del carrito -->
+        <li class="nav-item">
+          <a href="cart.html" class="nav-link cart-icon">
+            <i class="fa fa-shopping-cart"></i>
+            <span id="cart-badge" class="badge">0</span>
+          </a>
+        </li>
+        <!-- Fin del nuevo ícono del carrito -->
         </ul>
-        <!-- Aquí va el menú desplegable de usuario -->
         <div class="dropdown">
           <button class="btn btn-secondary dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-            <!-- Aquí debería ir el nombre de usuario -->
             Usuario
           </button>
           <ul class="dropdown-menu" aria-labelledby="userDropdown">
@@ -45,7 +47,6 @@
             <li><a class="dropdown-item" href="#" id="logoutBtn">Cerrar sesión</a></li>
           </ul>
         </div>
-        <!-- Fin del menú desplegable de usuario -->
         <div class="form-check form-switch">
           <input class="form-check-input" type="checkbox" role="switch" id="themeSwitch">
           <label class="form-check-label" for="themeSwitch">Modo Noche</label>
@@ -53,28 +54,42 @@
       </div>
     </div>
   </nav>
-      </div>
-      <div class="user-options"></div> 
-      <div class="userLogged"></div>  
-      </div>
-      </div>
+
+  <main class="container mt-5">
+    <h1>Carrito de Compras</h1>
+    <div class="row">
+        <div class="col-md-8">
+            <div id="cartItems" class="cart-items-list"></div>
+        </div>
+        <div class="col-md-4">
+            <div class="card cart-summary-card p-3">
+              <div id="subtotal" class="mb-3"></div>
+              <div id="envioDomicilio" class="mb-3"><strong><p>Envío: $200</p></strong></div>
+              <div id="cartTotal" class="mb-3"></div>
+             <div class="mb-3">
+                <label for="currencySwitch">Moneda:</label>
+                <select id="currencySwitch" class="form-select">
+                    <option value="USD" selected>Dólares (USD)</option>
+                    <option value="UYU">Pesos Uruguayos (UYU)</option>
+                </select>
+             </div>
+            
+                <button id="emptyCartBtn" class="btn btn-danger w-100 mb-2">Vaciar Carrito</button>
+                <a href="index.html" class="btn btn-primary w-100">Volver a la tienda</a>
+            </div>
+        </div>
     </div>
-  </nav>
-  <main>
-    <div class="container">
-      <div class="alert alert-danger text-center" role="alert">
-        <h4 class="alert-heading">Funcionalidad en desarrollo</h4>
-      </div>
-    </div>
-  </main>
+</main>
+
   <footer class="text-muted">
     <div class="container">
       <p class="float-end">
         <a href="#">Volver arriba</a>
       </p>
-      <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a></p>
+      <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jóvenes a Programar</a></p>
     </div>
   </footer>
+
   <div id="spinner-wrapper">
     <div class="lds-ring">
       <div></div>
@@ -83,12 +98,12 @@
       <div></div>
     </div>
   </div>
-  <script src="js/bootstrap.bundle.min.js"></script>
-  <script src="js/init.js"></script>
+
   <script src="js/cart.js"></script>
+  <script src="js/init.js"></script>
   <script src="js/login.js"></script>
   <script src="js/theme.js"></script>
   <script src="js/index.js"></script>
+  <script src="js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>
