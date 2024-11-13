@@ -55,6 +55,18 @@ document.addEventListener("DOMContentLoaded", () => {
                 `;
                 cartItemsContainer.innerHTML += productHTML;
 
+                cartItemsContainer.innerHTML += `
+                <div class="cart-item mb-3">
+                    <img src="${product.image}" class="cart-item-image" alt="${product.name}">
+                    <div class="cart-item-info">
+                        <h5>${product.name}</h5>
+                        <p class="price">Precio: ${product.cost} USD</p>
+                        <p class="quantity">Cantidad: ${product.quantity}</p>
+                        <p><strong>Subtotal: ${(productSubtotal).toFixed(2)} USD</strong></p>
+                    </div>
+                </div>
+            `;
+
             // Mostrar subtotal y total del carrito
             const shippingCost = 200; // Costo de envío
             const totalWithShipping = total + shippingCost; // Total incluyendo envío
@@ -119,3 +131,51 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
+document.addEventListener("DOMContentLoaded", () => {
+
+    const updateCartDisplay = () => {
+        const cart = JSON.parse(localStorage.getItem("cart")) || []; // Recuperar el carrito
+        let total = 0;
+        let subtotal = 0; // Inicializar subtotal
+        cartItemsContainer.innerHTML = ''; // Limpiar contenedor
+
+        if (cart.length === 0) {
+            cartItemsContainer.innerHTML = '<p>No hay productos en el carrito.</p>';
+            cartTotalContainer.innerHTML = ''; // Limpiar total si no hay productos
+            subtotalContainer.innerHTML = ''; // Limpiar subtotal si no hay productos
+        } else {
+            cart.forEach(product => {
+                const productSubtotal = product.cost * product.quantity; // Calcular subtotal por producto
+                total += productSubtotal; // Sumar al total general
+                subtotal += productSubtotal; // Sumar al subtotal
+                
+                cartItemsContainer.innerHTML += `
+                    <div class="cart-item mb-3">
+                        <img src="${product.image}" class="cart-item-image" alt="${product.name}">
+                        <div class="cart-item-info">
+                            <h5>${product.name}</h5>
+                            <p class="price">Precio: ${product.cost} USD</p>
+                            <p class="quantity">Cantidad: ${product.quantity}</p>
+                            <p><strong>Subtotal: ${(productSubtotal).toFixed(2)} USD</strong></p>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            // Mostrar subtotal y total del carrito
+            const shippingCost = 200; // Costo de envío
+            const totalWithShipping = total + shippingCost; // Total incluyendo envío
+            subtotalContainer.innerHTML = `<h4>Subtotal: ${subtotal.toFixed(2)} UYU</h4>`;
+            cartTotalContainer.innerHTML = `<h4 class="total">Total: ${totalWithShipping.toFixed(2)} UYU</h4>`;
+        }
+    };
+
+    // Inicializar la visualización del carrito
+    updateCartDisplay();
+
+    // Función para vaciar el carrito
+    emptyCartBtn.addEventListener("click", () => {
+        localStorage.removeItem("cart"); // Eliminar el carrito de localStorage
+        updateCartDisplay(); // Actualizar la visualización
+    });
+});
