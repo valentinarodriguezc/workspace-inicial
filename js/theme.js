@@ -1,27 +1,23 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Elementos del DOM
-    let themeSwitch = document.getElementById("themeSwitch");
+    const themeSwitch = document.getElementById("themeSwitch");
     const body = document.body;
 
-    // Función para aplicar el tema
     function applyTheme(theme) {
         if (theme === "dark") {
             body.classList.add("dark-mode");
-            themeSwitch.checked = true; // Mantiene el switch activo
+            themeSwitch.checked = true;
         } else {
             body.classList.remove("dark-mode");
-            themeSwitch.checked = false; // Mantiene el switch desactivado
+            themeSwitch.checked = false;
         }
     }
 
-    // Recuperar preferencia del usuario desde localStorage
-    const savedTheme = localStorage.getItem("theme") || "light"; // Default: Modo claro
+    const savedTheme = localStorage.getItem("theme") || "light";
     applyTheme(savedTheme);
 
-    // Evento para cambiar el tema
     themeSwitch.addEventListener("change", () => {
         const theme = themeSwitch.checked ? "dark" : "light";
         applyTheme(theme);
-        localStorage.setItem("theme", theme); // Guardar preferencia
+        localStorage.setItem("theme", theme);
     });
 });

@@ -23,11 +23,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const updateCartDisplay = () => {
         const cart = JSON.parse(localStorage.getItem("cart")) || [];
         let total = 0;
+        let subtotal = 0; // Inicializar subtotal
         cartItemsContainer.innerHTML = '';
 
         if (cart.length === 0) {
             cartItemsContainer.innerHTML = '<p>No hay productos en el carrito.</p>';
+            subtotalContainer.innerHTML = '';
             cartTotalContainer.innerHTML = '';
+             // Limpiar subtotal si no hay productos
         } else {
             cart.forEach((product, index) => {
                 const subtotal = product.cost * product.quantity; // Calcular subtotal por producto
