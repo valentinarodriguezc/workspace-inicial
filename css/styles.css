@@ -556,3 +556,23 @@ button:hover {
   content: '🌜';
   transform: translateX(-5px);
 }
+/* Estilos del ícono del carrito */
+.cart-icon {
+  position: relative;
+  display: inline-block;
+  margin-right: 15px; /* Ajusta el valor según sea necesario */
+}
+
+/* Estilos para el badge del carrito */
+#cart-badge {
+  position: absolute;
+  top: -10px; /* Ajusta la posición vertical */
+  right: -10px; /* Ajusta la posición horizontal */
+  background-color: #ff6f61; /* Color de fondo del badge */
+  color: white; /* Color del texto */
+  border-radius: 50%; /* Hacer el badge circular */
+  padding: 5px 10px; /* Espaciado interno del badge */
+  font-size: 12px; /* Tamaño de la fuente del badge */
+  min-width: 20px; /* Ancho mínimo del badge */
+  text-align: center;
+}

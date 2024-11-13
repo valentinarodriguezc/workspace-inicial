@@ -56,6 +56,15 @@ document.addEventListener("DOMContentLoaded", async () => {
         </div>
     `;
 
+    // Definición de la función para actualizar el badge
+    function updateCartBadge() {
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        let badge = document.getElementById('cart-badge'); // ID del badge en el HTML
+        if (badge) {
+            badge.textContent = cart.reduce((total, item) => total + item.quantity, 0) || '';
+        }
+    }
+    
     function addToCart() {
         // Obtener la información del producto que se va a comprar, definiendo un objeto con la info del mismo
         const productToBuy = {
@@ -130,6 +139,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         `).join('');
 
         listaProductosRelacionados.innerHTML = relatedProductsHTML;
+        updateCartBadge(); // Actualiza el badge al cargar la página
 
         // Agregar la sección de comentarios
         const commentsSection = document.createElement("div");
@@ -177,7 +187,7 @@ opinionForm.addEventListener('submit', function(event) {
 
     // Obtener la calificación seleccionada
     const rating = document.querySelector('input[name="rating"]:checked');
-    const commentText = document.getElementById('comentarios').value;
+    let commentText = document.getElementById('comentarios').value;
 
     if (!rating || !commentText) {
         alert('Seleccionar una calificación y escribir un comentario.');
@@ -194,7 +204,7 @@ opinionForm.addEventListener('submit', function(event) {
     };
 
     // Crear el HTML para el nuevo comentario
-    const commentsSection = document.getElementById('comments-section');
+    let commentsSection = document.getElementById('comments-section');
     const commentHtml = `
         <div class="comment mb-4">
             <h6>${newComment.user}</h6>

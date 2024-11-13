@@ -5,6 +5,8 @@ let minPrice = undefined;
 let maxPrice = undefined;
 let currentSortCriteria = undefined;
 
+let cartBadge = document.getElementById("cart-badge"); // Obtener el badge del carrito
+
 function setProductID(id) {
   localStorage.setItem("productID", id);  // Guardar el ID del producto
   window.location = "product-info.html";  // Redirigir a la página de detalles
@@ -58,6 +60,9 @@ function mostrarProductos(productos) {
     `;
   });
   contenedorProductos.innerHTML = contenedorHTML;
+
+  // Actualizar el badge del carrito después de mostrar los productos
+  updateCartBadge();
 }
 
 // Función para filtrar productos en tiempo real
@@ -115,6 +120,13 @@ document.addEventListener('DOMContentLoaded', function() {
     console.error('Error al obtener datos:', error);
   });
 });
+
+// Función para actualizar el badge del carrito
+const updateCartBadge = () => {
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  cartBadge.textContent = cart.reduce((total, product) => total + product.quantity, 0);
+};
+
 
 // Añadir evento al botón de filtrado de precios
 document.getElementById('rangeFilterPrice').addEventListener('click', function() {
