@@ -72,8 +72,40 @@
                 <select id="currencySwitch" class="form-select">
                     <option value="USD" selected>Dólares (USD)</option>
                     <option value="UYU">Pesos Uruguayos (UYU)</option>
-                </select>
+                </select>                
              </div>
+              <!-- Opciones de Tipo de Envío -->
+            <div class="mb-3">
+              <label for="shippingType">Tipo de envío:</label>
+              <select id="shippingType" class="form-select">
+                  <option value="premium">Premium 2 a 5 días (15%)</option>
+                  <option value="express">Express 5 a 8 días (7%)</option>
+                  <option value="standard" selected>Standard 12 a 15 días (5%)</option>
+              </select>
+            </div>
+
+            <!-- Dirección de Envío -->
+            <div id="addressFields" class="mb-3">
+              <label>Dirección de envío:</label>
+              <input type="text" class="form-control mb-2" id="street" placeholder="Calle" required>
+              <input type="text" class="form-control mb-2" id="department" placeholder="Departamento" required>
+              <input type="text" class="form-control mb-2" id="zipcode" placeholder="Código postal" required>
+            </div>
+
+            <!-- Forma de Pago -->
+            <div class="mb-3">
+              <label for="paymentMethod">Forma de pago:</label>
+              <select id="paymentMethod" class="form-select">
+                  <option value="creditCard" selected>Tarjeta de crédito</option>
+                  <option value="bankTransfer">Transferencia bancaria</option>
+              </select>
+            </div>
+
+            <!-- Botón de Finalizar Compra -->
+            <button id="checkoutBtn" class="btn btn-success w-100">Finalizar compra</button>
+          </div>
+      </div>
+  </div>
             
                 <button id="emptyCartBtn" class="btn btn-danger w-100 mb-2">Vaciar Carrito</button>
                 <a href="index.html" class="btn btn-primary w-100">Volver a la tienda</a>
