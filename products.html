@@ -14,68 +14,59 @@
 
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark custom-bg p-1">
-    <div class="container">
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav w-100 justify-content-between">
-          <li class="nav-item">
-            <a class="nav-link" href="index.html">Inicio</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="categories.html">Categorías</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="sell.html">Vender</a>
-          </li>
-          <li class="nav-item">
-          </li>
-           <!-- Aquí se añade el nuevo ícono del carrito -->
-        <li class="nav-item">
-          <a href="cart.html" class="nav-link cart-icon">
-            <i class="fa fa-shopping-cart"></i>
-            <span id="cart-badge" class="badge">0</span>
-          </a>
-        </li>
-        <!-- Fin del nuevo ícono del carrito -->
-        </ul>
-        <!-- Aquí va el menú desplegable de usuario -->
-        <div class="dropdown">
-          <button class="btn btn-secondary dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+      <div class="container">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav w-100 justify-content-between">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">Inicio</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="categories.html">Categorías</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="sell.html">Vender</a>
+            </li>
+            <div class="search-bar d-flex">
+              <input type="search" id="searchInput" class="form-control" placeholder="¿Qué estás buscando?" aria-label="Buscar productos">
+            </div>
+            <!-- Aquí se añade el nuevo ícono del carrito -->
+            <li class="nav-item">
+              <a href="cart.html" class="nav-link cart-icon">
+                <i class="fa fa-shopping-cart"></i>
+                <span id="cart-badge" class="badge">0</span>
+              </a>
+            </li>
+            <!-- Fin del nuevo ícono del carrito -->
+          </ul>
+          <!-- Aquí va el menú desplegable de usuario -->
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
             <!-- Aquí debería ir el nombre de usuario -->
             Usuario
-          </button>
-          <ul class="dropdown-menu" aria-labelledby="userDropdown">
-            <li><a class="dropdown-item" href="cart.html">Mi carrito</a></li>
-            <li><a class="dropdown-item" href="my-profile.html">Mi perfil</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#" id="logoutBtn">Cerrar sesión</a></li>
-          </ul>
-        </div>
-        <div class="form-check form-switch">
-          <input class="form-check-input theme-toggle" type="checkbox" role="switch" id="themeSwitch">
-          <label class="form-check-label" for="themeSwitch">
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="userDropdown">
+              <li><a class="dropdown-item" href="cart.html">Mi carrito</a></li>
+              <li><a class="dropdown-item" href="my-profile.html">Mi perfil</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#" id="logoutBtn">Cerrar sesión</a></li>
+            </ul>
+          </div>
+          <div class="form-check form-switch">
+            <input class="form-check-input theme-toggle" type="checkbox" role="switch" id="themeSwitch">
+            <label class="form-check-label" for="themeSwitch">
               <span class="icon">🌞</span>
-          </label>
-      </div>
-      </div>
-    </div>
-  </nav>
-      </div>
-      <div class="search-bar mt-3" style="position: absolute; top: 50px; right: 10px; z-index: 1;">
-        <input type="search" id="searchInput" placeholder="¿Qué estás buscando?" aria-label="Buscar productos">
-      </div>
-      <div class="user-options"></div> <!-- Añadir esta línea -->
-      <div class="userLogged"></div>
+            </label>
+          </div>
       </div>
     </div>
   </nav>
+
   <main class="pb-5 container">
     <div class="container" style="margin-top: 80px;"> <!-- Agregar margen superior aquí -->
-      
-  
         <div class="text-center p-4">
           <h2 id="pageTitle">Productos</h2>
           <p class="lead" id="categoryDescription">Veras aquí todos los productos de la categoría <span id="categoryname"></span>.</p>
