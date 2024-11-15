@@ -155,6 +155,12 @@ checkoutBtn.addEventListener("click", () => {
   console.log("Código Postal: ", zipcode);
   console.log("Método de Pago seleccionado: ", selectedPaymentMethod);
 
+   // Verificación de los campos de dirección
+   if (!street || !department || !zipcode) {
+    alert("Por favor, completa todos los campos de dirección antes de continuar.");
+    return;  // Detiene el flujo de ejecución si falta algún campo
+  }
+
   if (!shippingSelected) {
     alert("Por favor, selecciona una forma de envío.");
     return;
