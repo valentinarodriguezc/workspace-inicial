@@ -157,28 +157,28 @@ checkoutBtn.addEventListener("click", () => {
 
    // Verificación de los campos de dirección
    if (!street || !department || !zipcode) {
-    alert("Por favor, completa todos los campos de dirección antes de continuar.");
+    showAlert("Por favor, completa todos los campos de dirección antes de continuar.");
     return;  // Detiene el flujo de ejecución si falta algún campo
   }
 
   if (!shippingSelected) {
-    alert("Por favor, selecciona una forma de envío.");
+    showAlert("Por favor, selecciona una forma de envío.");
     return;
   }
   
   const cart = JSON.parse(localStorage.getItem("cart")) || [];
   if (cart.length === 0 || cart.some(product => product.quantity <= 0)) {
-    alert("Debes tener productos con cantidad mayor a 0 en tu carrito.");
+    showAlert("Debes tener productos con cantidad mayor a 0 en tu carrito.");
     return;
   }
   
   // Validar que se haya seleccionado una forma de pago válida
   if (!selectedPaymentMethod || selectedPaymentMethod === "") {
-    alert("Por favor, selecciona una forma de pago válida.");
+    showAlert("Por favor, selecciona una forma de pago válida.");
     return;
   }
 
-  alert("Compra finalizada con éxito. Gracias por tu compra!");
+  showAlert("Compra finalizada con éxito. ¡Gracias por tu compra!");
   localStorage.removeItem("cart");
   updateCartDisplay();
 });
