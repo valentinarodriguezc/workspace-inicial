@@ -80,6 +80,7 @@
             <div class="mb-3">
               <label for="shippingType">Tipo de envío:</label>
               <select id="shippingType" class="form-select">
+                <option value="">Seleccione una forma de envío</option>
                   <option value="premium">Premium 2 a 5 días (15%)</option>
                   <option value="express">Express 5 a 8 días (7%)</option>
                   <option value="standard" selected>Standard 12 a 15 días (5%)</option>
@@ -92,12 +93,16 @@
               <input type="text" class="form-control mb-2" id="locality" placeholder="Localidad" required>
               <input type="text" class="form-control mb-2" id="street" placeholder="Calle" required>
               <input type="text" class="form-control mb-2" id="number" placeholder="Número" required>
+               <!-- Nuevos campos -->
+    <input type="text" class="form-control mb-2" id="department" placeholder="Departamento" required>
+    <input type="text" class="form-control mb-2" id="zipcode" placeholder="Código Postal" required>
             </div>
 
             <!-- Forma de Pago -->
             <div class="mb-3">
               <label for="paymentMethod">Forma de pago:</label>
               <select id="paymentMethod" class="form-select">
+                <option value="" selected>Seleccione una forma de pago</option>
                   <option value="creditCard" selected>Tarjeta de crédito</option>
                   <option value="bankTransfer">Transferencia bancaria</option>
               </select>
