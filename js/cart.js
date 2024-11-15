@@ -53,10 +53,8 @@ document.addEventListener("DOMContentLoaded", () => {
                                 }</span>
                                 <button class="btn btn-sm btn-secondary increase-quantity" data-index="${index}">+</button>
                             </div>
-                            <p><strong>Subtotal: ${subtotal.toFixed(
-                              2
-                            )} UYU</strong></p>
-                           
+                            <p><strong>Subtotal: ${subtotal.toFixed(2)} UYU</strong></p>
+                           <button class="btn btn-sm btn-danger remove-product" data-index="${index}">Eliminar</button>
                         </div>
                     </div>
                 `;
@@ -67,19 +65,50 @@ document.addEventListener("DOMContentLoaded", () => {
     // Actualizar el badge después de mostrar el carrito
     updateCartBadge();
   };
-// Función para actualizar el total según la moneda seleccionada
-const updateTotalDisplay = (total) => {
-  const selectedCurrency = currencySwitch.value;
-  let displayTotal;
 
-  if (selectedCurrency === "UYU") {
-    displayTotal = total;
-    cartTotalContainer.innerHTML = `<h4>Total: ${displayTotal.toFixed(2)} UYU</h4>`;
-  } else {
-    displayTotal = total / changeToDollars;
-    cartTotalContainer.innerHTML = `<h4>Total: ${displayTotal.toFixed(2)} USD</h4>`;
-  }
-};
+  // Función para actualizar el total según la moneda seleccionada
+  const updateTotalDisplay = (total) => {
+    const selectedCurrency = currencySwitch.value;
+    let displayTotal;
+
+    if (selectedCurrency === "UYU") {
+      displayTotal = total;
+      cartTotalContainer.innerHTML = `<h4>Total: ${displayTotal.toFixed(2)} UYU</h4>`;
+    } else {
+      displayTotal = total / changeToDollars;
+      cartTotalContainer.innerHTML = `<h4>Total: ${displayTotal.toFixed(2)} USD</h4>`;
+    }
+  };
+
+  // Modal para confirmar la eliminación de un producto
+  let selectedIndex = null; // Almacena el índice del producto a eliminar
+  // Mostrar el modal
+    const showConfirmModal = (message, onConfirm) => {
+  const modal = document.getElementById("confirmModal");
+  const confirmYes = document.getElementById("confirmYes");
+  const confirmNo = document.getElementById("confirmNo");
+  const confirmMessage = document.getElementById("confirmMessage");
+
+  confirmMessage.textContent = message; // Configurar el mensaje
+  modal.style.display = "flex"; // Mostrar el modal
+
+  // Confirmar acción
+  const confirmHandler = () => {
+    onConfirm(); // Ejecutar acción confirmada
+    closeModal(); // Cerrar modal
+  };
+
+  // Cerrar modal
+  const closeModal = () => {
+    modal.style.display = "none";
+    confirmYes.removeEventListener("click", confirmHandler);
+    confirmNo.removeEventListener("click", closeModal);
+  };
+
+  confirmYes.addEventListener("click", confirmHandler);
+  confirmNo.addEventListener("click", closeModal);
+  };
+
   // Evento para aumentar, reducir o eliminar productos del carrito
   cartItemsContainer.addEventListener("click", (e) => {
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -93,12 +122,22 @@ const updateTotalDisplay = (total) => {
         cart.splice(index, 1); // Eliminar el producto si la cantidad es 0
       }
     } else if (e.target.classList.contains("remove-product")) {
-      cart.splice(index, 1); // Eliminar el producto específico
+      // Mostrar la alerta
+      selectedIndex = index; // Guardar índice del producto a eliminar
+      showConfirmModal("¿Estás seguro de que deseas eliminar este producto?", () => {
+        cart.splice(selectedIndex, 1); // Eliminar producto
+        saveCart(cart); // Guardar carrito actualizado
+        updateCartDisplay(); // Actualizar visualización del carrito
+      });
+      return;
     }
 
-    saveCart(cart); // Guardar carrito actualizado
-    updateCartDisplay(); // Actualizar visualización del carrito
+    // Guardar carrito y actualizar visualización para otras acciones
+    saveCart(cart); 
+    updateCartDisplay(); 
   });
+
+
   // Escuchar cambios en el switch de moneda
   currencySwitch.addEventListener("change", () => {
     updateCartDisplay(); // Actualizar visualización del carrito cuando se cambia la moneda
@@ -139,9 +178,9 @@ const updateTotalDisplay = (total) => {
     updateTotalDisplay(calculateTotalWithShipping(total));
   });
 
-// Función para finalizar compra
-const checkoutBtn = document.getElementById("checkoutBtn");
-checkoutBtn.addEventListener("click", () => {
+  // Función para finalizar compra
+  const checkoutBtn = document.getElementById("checkoutBtn");
+  checkoutBtn.addEventListener("click", () => {
   const street = document.getElementById("street").value;
   const department = document.getElementById("department").value;
   const zipcode = document.getElementById("zipcode").value;
@@ -155,8 +194,8 @@ checkoutBtn.addEventListener("click", () => {
   console.log("Código Postal: ", zipcode);
   console.log("Método de Pago seleccionado: ", selectedPaymentMethod);
 
-   // Verificación de los campos de dirección
-   if (!street || !department || !zipcode) {
+  // Verificación de los campos de dirección  
+  if (!street || !department || !zipcode) {
     showAlert("Por favor, completa todos los campos de dirección antes de continuar.");
     return;  // Detiene el flujo de ejecución si falta algún campo
   }
@@ -181,7 +220,7 @@ checkoutBtn.addEventListener("click", () => {
   showAlert("Compra finalizada con éxito. ¡Gracias por tu compra!");
   localStorage.removeItem("cart");
   updateCartDisplay();
-});
+  });
 
   // Inicializar la visualización del carrito y el badge
   updateCartDisplay();

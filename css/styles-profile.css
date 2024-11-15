@@ -13,7 +13,7 @@ body {
   }
   
   .profile {
-    background-color: #C77C93; 
+    background-color: #c7838a; 
     border-radius: 20px;
     padding: 20px;
     width: 600px;
@@ -186,7 +186,7 @@ body {
     }
     
     .modal-content {
-      background-color: #C77C93;
+      background-color: #c7838a;
       margin-top: 20%; 
       padding: 20px;
       width: 80%; 
