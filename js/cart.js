@@ -102,7 +102,7 @@ document.addEventListener("DOMContentLoaded", () => {
         2
       )} UYU</h4>`;
     } else {
-      displayTotal = total / changeToDollars;
+      displayTotal = total * changeToDollars;
       cartTotalContainer.innerHTML = `<h4>Total: ${displayTotal.toFixed(
         2
       )} USD</h4>`;
