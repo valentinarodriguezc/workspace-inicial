@@ -84,9 +84,13 @@ document.addEventListener("DOMContentLoaded", () => {
       cart.splice(index, 1); // Eliminar el producto específico
     }
 
+    
+
     saveCart(cart); // Guardar carrito actualizado
     updateCartDisplay(); // Actualizar visualización del carrito
   });
+
+  
   // Función para actualizar el total según la moneda seleccionada
   const updateTotalDisplay = (total) => {
     const selectedCurrency = currencySwitch.value;
@@ -160,20 +164,52 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Función para finalizar compra
+
   checkoutBtn.addEventListener("click", () => {
-    const street = document.getElementById("street").value;
-    const department = document.getElementById("department").value;
-    const zipcode = document.getElementById("zipcode").value;
+  const street = document.getElementById("street").value;
+  const department = document.getElementById("department").value;
+  const zipcode = document.getElementById("zipcode").value;
+  const paymentMethod = document.getElementById("paymentMethod"); // Cambiado para obtener el select de la forma de pago
+  const selectedPaymentMethod = paymentMethod.value; // Obtener el valor seleccionado
+  const shippingSelected = shippingType.value;
 
-    if (!street || !department || !zipcode) {
-      alert("Por favor, completa todos los datos de la dirección.");
-      return;
-    }
+  // Verificación de los valores
+  console.log("Calle: ", street);
+  console.log("Departamento: ", department);
+  console.log("Código Postal: ", zipcode);
+  console.log("Método de Pago seleccionado: ", selectedPaymentMethod);
 
-    alert("Compra finalizada con éxito. Gracias por tu compra!");
-    localStorage.removeItem("cart"); // Vacía el carrito al finalizar la compra
-    updateCartDisplay(); // Actualiza la visualización del carrito
+  // Verificación de los campos de dirección  
+  if (!street || !department || !zipcode) {
+    showAlert("Por favor, completa todos los campos de dirección antes de continuar.");
+    return;  // Detiene el flujo de ejecución si falta algún campo
+  }
+
+  if (!shippingSelected) {
+    showAlert("Por favor, selecciona una forma de envío.");
+    return;
+  }
+  
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  if (cart.length === 0 || cart.some(product => product.quantity <= 0)) {
+    showAlert("Debes tener productos con cantidad mayor a 0 en tu carrito.");
+    return;
+  }
+  
+  // Validar que se haya seleccionado una forma de pago válida
+  if (!selectedPaymentMethod || selectedPaymentMethod === "") {
+    showAlert("Por favor, selecciona una forma de pago válida.");
+    return;
+  }
+
+  showAlert("Compra finalizada con éxito. ¡Gracias por tu compra!");
+  localStorage.removeItem("cart");
+  updateCartDisplay();
   });
+
+  // Inicializar la visualización del carrito y el badge
+  updateCartDisplay();
+  updateCartBadge();
 });
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -247,11 +283,42 @@ document.addEventListener("DOMContentLoaded", () => {
     )} ${currencySymbol}</h4>`;
   };
 
+ // Modal para confirmar la eliminación de un producto
+ let selectedIndex = null; // Almacena el índice del producto a eliminar
+ // Mostrar el modal
+   const showConfirmModal = (message, onConfirm) => {
+ const modal = document.getElementById("confirmModal");
+ const confirmYes = document.getElementById("confirmYes");
+ const confirmNo = document.getElementById("confirmNo");
+ const confirmMessage = document.getElementById("confirmMessage");
+
+ confirmMessage.textContent = message; // Configurar el mensaje
+ modal.style.display = "flex"; // Mostrar el modal
+
+ // Confirmar acción
+ const confirmHandler = () => {
+   onConfirm(); // Ejecutar acción confirmada
+   closeModal(); // Cerrar modal
+ };
+
+ // Cerrar modal
+ const closeModal = () => {
+   modal.style.display = "none";
+   confirmYes.removeEventListener("click", confirmHandler);
+   confirmNo.removeEventListener("click", closeModal);
+ };
+
+ confirmYes.addEventListener("click", confirmHandler);
+ confirmNo.addEventListener("click", closeModal);
+ };
+
+
   // Evento para actualizar costos cuando se cambia el tipo de envío
   shippingType.addEventListener("change", updateCostsDisplay);
 
   // Evento para actualizar costos cuando se cambia la moneda
   currencySwitch.addEventListener("change", updateCostsDisplay);
+  
 
   // Actualizar la visualización del carrito
   const updateCartDisplay = () => {
@@ -314,4 +381,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Inicializar la visualización del carrito y costos
   updateCartDisplay();
+  updateCartBadge();
 });

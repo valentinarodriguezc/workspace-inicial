@@ -10,7 +10,7 @@
   <link href="css/styles.css" rel="stylesheet">
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-1">
+  <nav class="navbar navbar-expand-lg navbar-dark custom-bg p-1">
     <div class="container">
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -89,10 +89,13 @@
             <!-- Dirección de Envío -->
             <div id="addressFields" class="mb-3">
               <label>Dirección de envío:</label>
+              <input type="text" class="form-control mb-2" id="locality" placeholder="Localidad" required>
               <input type="text" class="form-control mb-2" id="street" placeholder="Calle" required>
-              <input type="text" class="form-control mb-2" id="department" placeholder="Departamento" required>
-              <input type="text" class="form-control mb-2" id="zipcode" placeholder="Código postal" required>
-            </div>
+              <input type="text" class="form-control mb-2" id="number" placeholder="Número" required>
+               <!-- Nuevos campos -->
+                <input type="text" class="form-control mb-2" id="department" placeholder="Departamento" required>
+                <input type="text" class="form-control mb-2" id="zipcode" placeholder="Código Postal" required>
+              </div>
 
             <!-- Forma de Pago -->
             <div class="mb-3">
@@ -113,6 +116,16 @@
                 <a href="index.html" class="btn btn-primary w-100">Volver a la tienda</a>
             </div>
         </div>
+    </div>
+    <div id="alert" class="alert" style="display:none;"></div>
+    <div id="confirmModal" class="modal-alert" style="display: none;">
+      <div class="modal-container">
+        <p id="confirmMessage">¿Estás seguro de que deseas eliminar este producto?</p>
+        <div class="modal-buttons">
+          <button id="confirmYes" class="btn btn-danger">Sí</button>
+          <button id="confirmNo" class="btn btn-secondary">No</button>
+        </div>
+      </div>
     </div>
 </main>
 
