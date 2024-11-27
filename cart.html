@@ -80,6 +80,7 @@
             <div class="mb-3">
               <label for="shippingType">Tipo de envío:</label>
               <select id="shippingType" class="form-select">
+                <option value="">Seleccione una forma de envío</option>
                   <option value="premium">Premium 2 a 5 días (15%)</option>
                   <option value="express">Express 5 a 8 días (7%)</option>
                   <option value="standard" selected>Standard 12 a 15 días (5%)</option>
@@ -101,6 +102,7 @@
             <div class="mb-3">
               <label for="paymentMethod">Forma de pago:</label>
               <select id="paymentMethod" class="form-select">
+                <option value="" selected>Seleccione una forma de pago</option>
                   <option value="creditCard" selected>Tarjeta de crédito</option>
                   <option value="bankTransfer">Transferencia bancaria</option>
               </select>
@@ -108,27 +110,42 @@
 
             <!-- Botón de Finalizar Compra -->
             <button id="checkoutBtn" class="btn btn-success w-100">Finalizar compra</button>
+            <!-- Modal de Finalizar Compra -->
+<div class="modal fade" id="checkoutModal" tabindex="-1" aria-labelledby="checkoutModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="checkoutModalLabel">Finalizar compra</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p id="modalMessage">Por favor, completa todos los campos de dirección antes de continuar.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
           </div>
       </div>
   </div>
-            
-                <button id="emptyCartBtn" class="btn btn-danger w-100 mb-2">Vaciar Carrito</button>
-                <a href="index.html" class="btn btn-primary w-100">Volver a la tienda</a>
-            </div>
-        </div>
-    </div>
-    <div id="alert" class="alert" style="display:none;"></div>
-    <div id="confirmModal" class="modal-alert" style="display: none;">
-      <div class="modal-container">
-        <p id="confirmMessage">¿Estás seguro de que deseas eliminar este producto?</p>
-        <div class="modal-buttons">
-          <button id="confirmYes" class="btn btn-danger">Sí</button>
-          <button id="confirmNo" class="btn btn-secondary">No</button>
-        </div>
+  <button id="emptyCartBtn" class="btn btn-danger w-100 mb-2">Vaciar Carrito</button>
+  <a href="index.html" class="btn btn-primary w-100">Volver a la tienda</a>
+  <div id="alert" class="alert" style="display:none;"></div>
+
+  <!-- Modal para confirmación de eliminación-->
+  <div id="confirmModal" class="modal-alert" style="display: none;">
+    <div class="modal-container">
+      <p id="confirmMessage">¿Estás seguro de que deseas eliminar este producto?</p>
+      <div class="modal-buttons">
+        <button id="confirmYes" class="btn btn-danger">Sí</button>
+        <button id="confirmNo" class="btn btn-secondary">No</button>
       </div>
     </div>
+  </div>
 </main>
-
   <footer class="text-muted">
     <div class="container">
       <p class="float-end">
