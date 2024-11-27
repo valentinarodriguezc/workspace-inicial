@@ -13,6 +13,18 @@ nav a {
   text-decoration: none;
 }
 
+.search-bar {
+  display: flex;
+}
+
+.search-bar input {
+  flex-grow: 1;
+}
+
+.custom-bg {
+  background-color: #c7838a;
+}
+
 .bd-placeholder-img {
   font-size: 1.125rem;
   text-anchor: middle;
