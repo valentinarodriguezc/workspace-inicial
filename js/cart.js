@@ -104,6 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
                       <button class="btn btn-sm btn-secondary increase-quantity" data-index="${index}">+</button>
                   </div>
                   <p><strong>Subtotal: ${productSubtotal.toFixed(2)} UYU</strong></p>
+                  <button class="btn btn-sm btn-danger remove-product" data-index="${index}">Eliminar</button>
               </div>
           </div>
         `;
@@ -125,6 +126,8 @@ document.addEventListener("DOMContentLoaded", () => {
       if (cart[index].quantity <= 0) {
         cart.splice(index, 1);
       }
+    } else if (e.target.classList.contains("remove-product")) {
+      cart.splice(index, 1);  // Elimina el producto en el índice correspondiente
     }
 
     saveCart(cart);
