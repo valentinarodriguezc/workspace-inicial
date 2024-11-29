@@ -1,11 +1,12 @@
-const CATEGORIES_URL = "https://japceibal.github.io/emercado-api/cats/cat.json";
-const PUBLISH_PRODUCT_URL = "https://japceibal.github.io/emercado-api/sell/publish.json";
-const PRODUCTS_URL = "https://japceibal.github.io/emercado-api/cats_products/";
-const PRODUCT_INFO_URL = "https://japceibal.github.io/emercado-api/products/";
-const PRODUCT_INFO_COMMENTS_URL = "https://japceibal.github.io/emercado-api/products_comments/";
-const CART_INFO_URL = "https://japceibal.github.io/emercado-api/user_cart/";
-const CART_BUY_URL = "https://japceibal.github.io/emercado-api/cart/buy.json";
-const EXT_TYPE = ".json";
+// URLs del backend desarrollado
+const BASE_URL = "https://backend-ecommerce-github-io.vercel.app"; // Cambia localhost por el dominio si despliegas el backend
+const CATEGORIES_URL = `${BASE_URL}/categories`;
+const PUBLISH_PRODUCT_URL = `${BASE_URL}/sell/publish`;
+const PRODUCTS_URL = `${BASE_URL}/cats_products`;
+const PRODUCT_INFO_URL = `${BASE_URL}/products`;
+const PRODUCT_INFO_COMMENTS_URL = `${BASE_URL}/products_comments`;
+const CART_INFO_URL = `${BASE_URL}/user_cart`;
+const CART_BUY_URL = `${BASE_URL}/cart/buy`;
 
 // Función para alerta
 function showAlert(message) {
@@ -23,22 +24,38 @@ function showAlert(message) {
   }, 3000);
 }
 
-let showSpinner = function(){
+document.addEventListener('DOMContentLoaded', function () {
+  const userDropdown = document.getElementById('userDropdown'); // Seleccionar el botón
+
+  // Obtener el nombre del usuario desde localStorage
+  const username = localStorage.getItem('username');
+
+  if (username) {
+      // Si hay un usuario logueado, mostrar su nombre
+      userDropdown.textContent = username;
+  } else {
+      // Si no hay usuario logueado, mostrar "Usuario"
+      userDropdown.textContent = "Usuario";
+  }
+});
+
+
+let showSpinner = function() {
   document.getElementById("spinner-wrapper").style.display = "block";
 }
 
-let hideSpinner = function(){
+let hideSpinner = function() {
   document.getElementById("spinner-wrapper").style.display = "none";
 }
 
-let getJSONData = function(url){
+let getJSONData = function(url) {
     let result = {};
     showSpinner();
     return fetch(url)
     .then(response => {
       if (response.ok) {
         return response.json();
-      }else{
+      } else {
         throw Error(response.statusText);
       }
     })

@@ -1,28 +1,42 @@
-let relatedProducts = []; // Definir como variable global para accederla fuera del bloque
 
 document.addEventListener("DOMContentLoaded", async () => {
     let productID = localStorage.getItem("productID"); // Recuperar el ID del producto
     let productInfo = document.getElementById("product-info");
+    let relatedProductsContainer = document.getElementById("listaProductosRelacionados"); // Contenedor de productos relacionados
+    let commentsSection = document.getElementById("comments-section"); // Sección de comentarios
 
-    const responseID = await getJSONData(PRODUCT_INFO_URL + productID + EXT_TYPE);
-    const responseComments = await getJSONData(PRODUCT_INFO_COMMENTS_URL + productID + EXT_TYPE);
+    if (!productID) {
+        console.error("No se encontró el ID del producto en localStorage.");
+        document.getElementById("product-info").innerHTML = "<p>Error: No se puede cargar la información del producto.</p>";
+        return;
+    }
+    console.log("ID del producto recuperado:", productID); // Asegúrate de que este log muestre el ID correcto
+    
+    if (!productID) {
+        console.error("No se encontró el ID del producto.");
+        productInfo.innerHTML = "<p>Error: No se puede cargar la información del producto.</p>";
+        return;
+    }
+
+    let loggedInUser = localStorage.getItem("username") || "Invitado";
+    console.log("Usuario logueado:", loggedInUser);
+
+    // Solicitar datos del producto y comentarios desde el backend
+    const responseID = await getJSONData(`${PRODUCT_INFO_URL}/${productID}`);
+    const responseComments = await getJSONData(`${PRODUCT_INFO_COMMENTS_URL}/${productID}`);
 
     if (responseID.status === "ok" && responseComments.status === "ok") {
         let product = responseID.data;
         let productComments = responseComments.data;
 
-        // Variable para almacenar las imágenes en un carrusel
-        let imagesHTML = '';
+        // Generar el carrusel de imágenes
+        let imagesHTML = product.images.map((imageURL, index) => `
+            <div class="carousel-item ${index === 0 ? 'active' : ''}">
+                <img src="${imageURL}" class="d-block w-100" alt="${product.name}">
+            </div>
+        `).join('');
 
-        product.images.forEach((imageURL, index) => {
-            imagesHTML += `
-                <div class="carousel-item ${index === 0 ? 'active' : ''}">
-                    <img src="${imageURL}" class="d-block w-100" alt="${product.name}">
-                </div>
-            `;
-        });
-
-        // Mostrar los detalles del producto dentro de una tarjeta (card)
+        // Mostrar los detalles del producto
         productInfo.innerHTML = `
         <div class="card">
             <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
@@ -31,9 +45,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                         <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="${index}" class="${index === 0 ? 'active' : ''}" aria-current="true" aria-label="Slide ${index + 1}"></button>
                     `).join('')}
                 </div>
-                <div class="carousel-inner">
-                    ${imagesHTML}
-                </div>
+                <div class="carousel-inner">${imagesHTML}</div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Previous</span>
@@ -43,7 +55,6 @@ document.addEventListener("DOMContentLoaded", async () => {
                     <span class="visually-hidden">Next</span>
                 </button>
             </div>
-    
             <div class="card-body">
                 <h5 class="card-title">${product.name}</h5>
                 <p class="card-text"><strong>Descripción:</strong> ${product.description}</p>
@@ -54,110 +65,116 @@ document.addEventListener("DOMContentLoaded", async () => {
                 <button id="addToCart" class="btn btn-primary">Añadir al Carrito</button>
             </div>
         </div>
-    `;
+        `;
 
-    // Definición de la función para actualizar el badge
-    function updateCartBadge() {
-        let cart = JSON.parse(localStorage.getItem('cart')) || [];
-        let badge = document.getElementById('cart-badge'); // ID del badge en el HTML
-        if (badge) {
-            badge.textContent = cart.reduce((total, item) => total + item.quantity, 0) || '';
-        }
-    }
-    
-    function addToCart() {
-        // Obtener la información del producto que se va a comprar, definiendo un objeto con la info del mismo
-        const productToBuy = {
-            id: product.id, 
-            name: product.name,
-            cost: product.cost,
-            currency: product.currency,
-            quantity: 1,
-            image: product.images[0], 
+        // Función para añadir al carrito
+        const addToCart = () => {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            const existingProductIndex = cart.findIndex(item => item.id === product.id);
+
+            if (existingProductIndex > -1) {
+                // Si el producto ya está en el carrito, incrementa la cantidad
+                cart[existingProductIndex].quantity += 1;
+            } else {
+                // Si el producto no está en el carrito, añádelo
+                cart.push({
+                    id: product.id,
+                    name: product.name,
+                    cost: product.cost,
+                    currency: product.currency,
+                    quantity: 1,
+                    image: product.images[0]
+                });
+            }
+
+            localStorage.setItem("cart", JSON.stringify(cart));
         };
-    
-        // Cargar el carrito desde localStorage (de existir) o inicializar un array vacío
-        let cart = JSON.parse(localStorage.getItem('cart')) || []; 
 
-        // Verificar si el producto que se agrega ya existe en el carrito
-        const existingProduct = cart.findIndex(item => item.id === productToBuy.id); 
-        if (existingProduct > -1) {
-            cart[existingProduct].quantity += 1;
-        } else {
-            cart.push(productToBuy); // Añadir el producto al carrito de compras
-        }
+        // Función para comprar
+        const buyNow = () => {
+            addToCart(); // Añade el producto al carrito
+            window.location.href = "cart.html"; // Redirige al carrito
+        };
 
-        localStorage.setItem('cart', JSON.stringify(cart)); // Convertir a JSON y guardar en el localStorage
-     }
+        // Mostrar una alerta al añadir al carrito
+        document.getElementById("addToCart").addEventListener("click", () => {
+            addToCart();
+            showCustomAlert("Producto añadido al carrito.", "success");
+        });
 
-    document.getElementById("buyButton").addEventListener("click", function() {
-        addToCart(); // Llamar a la función
-        window.location.href = "cart.html"; // Redirigir al carrito
-    });
-    document.getElementById("addToCart").addEventListener("click", function() {
-        addToCart(); // Llamar a la función
-        showAlert("Producto añadido al carrito."); // Mostrar un mensaje de confirmación
-    });
-    
-        // Verificar si hay productos relacionados
-        if (!product.relatedProducts || !Array.isArray(product.relatedProducts) || product.relatedProducts.length === 0) {
-            console.error("No hay productos relacionados disponibles.");
-            return;
-        }
+        // Mostrar una alerta al comprar
+        document.getElementById("buyButton").addEventListener("click", () => {
+            buyNow();
+            showCustomAlert("¡Gracias por tu compra! Redirigiendo al carrito...", "info");
+        });
 
-        const relatedProductIDs = product.relatedProducts;
-        console.log("Productos relacionados:", relatedProductIDs);
-
-        // Crear las promesas para obtener los productos relacionados
-        const relatedProductsPromises = relatedProductIDs.map(relatedProduct => 
-            getJSONData(PRODUCT_INFO_URL + relatedProduct.id + EXT_TYPE)
-        );
-        const relatedProductsResponses = await Promise.all(relatedProductsPromises);
-
-        // Asignar los productos relacionados a la variable global
-        relatedProducts = relatedProductsResponses.map(response => response.data);
-        console.log("Productos relacionados procesados:", relatedProducts);
-
-        // Generar HTML de productos relacionados
-        let listaProductosRelacionados = document.getElementById("listaProductosRelacionados");
-        if (!listaProductosRelacionados) {
-            console.error("No se encontró el contenedor de productos relacionados.");
-            return;
-        }
-
-        let relatedProductsHTML = relatedProducts.map(relatedProduct => `
-            <div class="col-md-3">
-                <div class="card mb-4 shadow-sm cursor-active" onclick="setProductID(${relatedProduct.id})">
-                    <img src="${relatedProduct.images[0] || 'ruta/por_defecto.jpg'}" alt="${relatedProduct.name}" class="card-img-top img-fluid" />
-                    <div class="card-body">
-                        <h5 class="card-title">${relatedProduct.name}</h5>
-                        <p class="card-text"><strong>Precio:</strong> ${relatedProduct.cost} ${relatedProduct.currency}</p>
-                        <p class="card-text"><strong>Vendidos:</strong> ${relatedProduct.soldCount}</p>
+        // Mostrar productos relacionados
+        if (product.relatedProducts && product.relatedProducts.length > 0) {
+            relatedProducts = product.relatedProducts; // Almacenar los productos relacionados
+            relatedProductsContainer.innerHTML = relatedProducts.map(relatedProduct => `
+                <div class="col-md-3">
+                    <div class="card mb-4 shadow-sm cursor-active" onclick="setProductID(${relatedProduct.id})">
+                        <img src="${relatedProduct.image}" alt="${relatedProduct.name}" class="card-img-top img-fluid" />
+                        <div class="card-body">
+                            <h5 class="card-title">${relatedProduct.name}</h5>
+                            <p class="card-text"><strong>Precio:</strong> ${relatedProduct.currency || ''} ${relatedProduct.cost || 'N/A'}</p>
+                            <p class="card-text"><strong>Vendidos:</strong> ${relatedProduct.soldCount || 0}</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-        `).join('');
+            `).join('');
+        } else {
+            relatedProductsContainer.innerHTML = "<p>No hay productos relacionados disponibles.</p>";
+        }
 
-        listaProductosRelacionados.innerHTML = relatedProductsHTML;
-        updateCartBadge(); // Actualiza el badge al cargar la página
-
-        // Agregar la sección de comentarios
-        const commentsSection = document.createElement("div");
-        commentsSection.id = "comments-section";
-        commentsSection.classList.add("mt-4");
+        // Procesar comentarios existentes
         commentsSection.innerHTML = `
-            <h5 class="comentarios">Comentarios:</h5>
-            ${productComments.map(comment => `
-                <div class="comment mb-3 comments-section">
-                    <h6>${comment.user}</h6>
-                    <div class="stars">${getStars(comment.score)}</div>
-                    <p>${comment.description}</p>
-                    <p><small class="text-muted">${new Date(comment.dateTime).toLocaleString()}</small></p>
+        <h5>Comentarios:</h5>
+        ${productComments.map(comment => `
+            <div class="comment mb-3">
+                <h6>${comment.user}</h6>
+                <div class="stars">${getStars(comment.score)}</div>
+                <p>${comment.description}</p>
+                <p><small class="text-muted">${new Date(comment.dateTime).toLocaleString()}</small></p>
+            </div>
+        `).join('')}`;
+
+        // Manejar el envío del formulario de comentarios
+        const opinionForm = document.getElementById("opinion-form");
+        opinionForm.addEventListener("submit", function (event) {
+            event.preventDefault(); // Prevenir recarga de la página
+
+            // Obtener datos del formulario
+            const rating = document.querySelector('input[name="rating"]:checked'); // Calificación seleccionada
+            const commentText = document.getElementById("comentarios").value.trim();
+
+            if (!rating || !commentText) {
+                showCustomAlert("Por favor selecciona una calificación y escribe un comentario.", "error");
+                return;
+            }
+
+            // Crear el nuevo comentario
+            const newComment = {
+                user: loggedInUser, // Usar el usuario logueado
+                score: parseInt(rating.value),
+                description: commentText,
+                dateTime: new Date().toISOString()
+            };
+
+            // Actualizar la sección de comentarios dinámicamente
+            const commentHTML = `
+                <div class="comment mb-3">
+                    <h6>${newComment.user}</h6>
+                    <div class="stars">${getStars(newComment.score)}</div>
+                    <p>${newComment.description}</p>
+                    <p><small class="text-muted">${new Date(newComment.dateTime).toLocaleString()}</small></p>
                 </div>
-            `).join('')}
-        `;
-        
-        productInfo.appendChild(commentsSection);
+            `;
+            commentsSection.insertAdjacentHTML("beforeend", commentHTML);
+
+            // Limpiar el formulario
+            opinionForm.reset();
+        });
     } else {
         productInfo.innerHTML = `<p>Error al cargar la información del producto</p>`;
     }
@@ -165,8 +182,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 // Función para redirigir al producto seleccionado
 function setProductID(id) {
-    localStorage.setItem("productID", id); // Guardar el ID del producto en localStorage
-    window.location = "product-info.html"; // Redirigir a la página de detalles del producto
+    console.log("Guardando productID:", id); // Verifica que el ID sea correcto
+    localStorage.setItem("productID", id);
+    window.location = "product-info.html";
 }
 
 // Función para generar estrellas según la calificación
@@ -177,46 +195,3 @@ function getStars(score) {
     }
     return starsHTML;
 }
-
-// Agregar un comentario a la sección de comentarios 
-const opinionForm = document.getElementById('opinion-form');
-
-// Manejar el envío del formulario
-opinionForm.addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevenir el comportamiento por defecto de envío
-
-    // Obtener la calificación seleccionada
-    const rating = document.querySelector('input[name="rating"]:checked');
-    let commentText = document.getElementById('comentarios').value;
-
-    if (!rating || !commentText) {
-        alert('Seleccionar una calificación y escribir un comentario.');
-        return;
-    }
-
-    // Crear el nuevo comentario
-    let yourName = localStorage.getItem('username');
-    const newComment = {
-        user: yourName,
-        score: rating.value,
-        description: commentText,
-        dateTime: new Date()
-    };
-
-    // Crear el HTML para el nuevo comentario
-    let commentsSection = document.getElementById('comments-section');
-    const commentHtml = `
-        <div class="comment mb-4">
-            <h6>${newComment.user}</h6>
-            <div class="stars">${getStars(newComment.score)}</div>
-            <p>${newComment.description}</p>
-            <p><small class="text-muted">${new Date(newComment.dateTime).toLocaleString()}</small></p>
-        </div>
-    `;
-
-    // Agregar el nuevo comentario a la sección de comentarios
-    commentsSection.innerHTML += commentHtml;
-
-    // Limpiar el formulario
-    opinionForm.reset();
-});

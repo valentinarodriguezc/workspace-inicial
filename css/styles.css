@@ -738,3 +738,44 @@ h1 {
 .modal-buttons button {
   padding: 10px 20px;
 }
+
+
+/* Estilo base para la alerta */
+.custom-alert {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1050;
+  background-color: #4caf50; /* Color de fondo (verde por defecto) */
+  color: white;
+  padding: 15px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  opacity: 0;
+  transform: translateY(-20px);
+}
+
+/* Mostrar la alerta */
+.custom-alert.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Ocultar la alerta */
+.custom-alert.hidden {
+  opacity: 0;
+  transform: translateY(-20px);
+  pointer-events: none;
+}
+
+/* Alerta de error */
+.custom-alert.error {
+  background-color: #f44336; /* Rojo */
+}
+
+/* Alerta de información */
+.custom-alert.info {
+  background-color: #2196f3; /* Azul */
+}

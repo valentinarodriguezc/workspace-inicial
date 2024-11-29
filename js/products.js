@@ -1,15 +1,77 @@
-// Array para almacenar los productos
+// Variables globales
 let listaProductos = [];
 let productosFiltrados = [];
 let minPrice = undefined;
 let maxPrice = undefined;
 let currentSortCriteria = undefined;
 
-let cartBadge = document.getElementById("cart-badge"); // Obtener el badge del carrito
+const cartBadge = document.getElementById("cart-badge");
 
-function setProductID(id) {
-  localStorage.setItem("productID", id);  // Guardar el ID del producto
-  window.location = "product-info.html";  // Redirigir a la página de detalles
+// Función principal para cargar los productos al cargar la página
+document.addEventListener('DOMContentLoaded', function () {
+  let categoryName = localStorage.getItem("catName"); // Recuperar el nombre de la categoría
+
+  if (!categoryName) {
+    console.error("No se encontró el nombre de la categoría.");
+    return;
+  }
+
+  // Solicitar productos desde el backend usando el nombre de la categoría como filtro
+  getJSONData(`https://backend-ecommerce-github-io.vercel.app/products?category=${encodeURIComponent(categoryName)}`)
+    .then(function (resultObj) {
+      if (resultObj.status === "ok") {
+        listaProductos = resultObj.data; // Productos filtrados por la categoría
+        productosFiltrados = [...listaProductos]; // Inicializar productos filtrados
+
+        // Mostrar el nombre de la categoría en el título
+        document.getElementById("categoryname").innerHTML = categoryName;
+
+        if (listaProductos.length > 0) {
+          mostrarProductos(productosFiltrados);
+        } else {
+          console.error("No hay productos disponibles para esta categoría.");
+        }
+
+        // Habilitar el filtrado en tiempo real
+        activarFiltroEnTiempoReal();
+      } else {
+        console.error("Error al cargar los productos:", resultObj.status);
+      }
+    })
+    .catch(function (error) {
+      console.error("Error al obtener datos del backend:", error);
+    });
+});
+
+// Función para mostrar los productos en la página
+function mostrarProductos(productos) {
+  const contenedorProductos = document.querySelector('#listaProductos');
+  let contenedorHTML = '';
+
+  // Filtrar y ordenar productos
+  productos = aplicarFiltroDePrecio(productos);
+  productos = ordenarProductos(productos, currentSortCriteria);
+
+  // Crear tarjetas para cada producto
+  productos.forEach(producto => {
+    const imageUrl = producto.images?.[0] || "img/default.jpg"; // Usa la primera imagen o una predeterminada
+    contenedorHTML += `
+      <div class="col-md-4">
+        <div class="card mb-4 shadow-sm cursor-active" onclick="setProductID(${producto.id})">
+          <img class="bd-placeholder-img card-img-top" src="${imageUrl}" alt="${producto.name}">
+          <h3 class="m-3">${producto.name}</h3>
+          <div class="card-body">
+            <p class="card-text">${producto.description}</p>
+            <p class="card-text"><strong>Precio:</strong> ${producto.cost} ${producto.currency}</p>
+            <p class="card-text"><strong>Vendidos:</strong> ${producto.soldCount}</p>
+          </div>
+        </div>
+      </div>
+    `;
+  });
+
+  contenedorProductos.innerHTML = contenedorHTML;
+  updateCartBadge(); // Actualizar el badge del carrito
 }
 
 // Función para aplicar el filtro de precio
@@ -23,152 +85,70 @@ function aplicarFiltroDePrecio(productos) {
 // Función para ordenar productos
 function ordenarProductos(productos, criterio) {
   if (criterio === 'priceAsc') {
-    return productos.sort((a, b) => parseFloat(a.cost) - parseFloat(b.cost));
+    return productos.sort((a, b) => a.cost - b.cost);
   } else if (criterio === 'priceDesc') {
-    return productos.sort((a, b) => parseFloat(b.cost) - parseFloat(a.cost));
+    return productos.sort((a, b) => b.cost - a.cost);
   } else if (criterio === 'relevanceDesc') {
     return productos.sort((a, b) => b.soldCount - a.soldCount);
   }
   return productos;
 }
 
-// Función para mostrar los productos como tarjetas
-function mostrarProductos(productos) {
-  let contenedorProductos = document.querySelector('#listaProductos');
-  let contenedorHTML = '';
-
-  // Filtrar productos basado en el rango de precios
-  productos = aplicarFiltroDePrecio(productos);
-
-  // Ordenar productos basado en el criterio actual
-  productos = ordenarProductos(productos, currentSortCriteria);
-
-  // Recorrer cada producto y crear su tarjeta
-  productos.forEach(producto => {
-    contenedorHTML += `
-      <div class="col-md-4">
-        <div class="cards" class="card mb-4 shadow-sm custom-card cursor-active" onclick="setProductID(${producto.id})">
-          <img class="bd-placeholder-img card-img-top" src="${producto.image}" alt="${producto.name}">
-          <h3 class="m-3">${producto.name}</h3>
-          <div class="card-body">
-            <p class="card-text">${producto.description}</p>
-            <p class="card-text"><strong>Precio:</strong> ${producto.cost} ${producto.currency}</p>
-            <p class="card-text"><strong>Vendidos:</strong> ${producto.soldCount}</p>
-          </div>
-        </div>
-      </div>
-    `;
-  });
-  contenedorProductos.innerHTML = contenedorHTML;
-
-  // Actualizar el badge del carrito después de mostrar los productos
-  updateCartBadge();
+// Función para actualizar el badge del carrito
+function updateCartBadge() {
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  cartBadge.textContent = cart.reduce((total, product) => total + product.quantity, 0);
 }
 
-// Función para filtrar productos en tiempo real
-function filtrarProductos() {
-  const searchInput = document.querySelector('#searchInput'); // Seleccionar el input de búsqueda
-  
-  // Verificar que el campo de búsqueda exista
+// Función para activar el filtro en tiempo real
+function activarFiltroEnTiempoReal() {
+  const searchInput = document.querySelector('#searchInput');
   if (searchInput) {
-    searchInput.addEventListener('input', function(event) {
-      const searchTerm = event.target.value.toLowerCase(); // Convertir a minúsculas para búsqueda case-insensitive
-
-      // Filtrar productos que coincidan con el término de búsqueda en nombre o descripción
-      productosFiltrados = listaProductos.filter(producto => 
-        producto.name.toLowerCase().includes(searchTerm) || 
-        producto.description.toLowerCase().includes(searchTerm)
+    searchInput.addEventListener('input', function (event) {
+      const searchTerm = event.target.value.toLowerCase();
+      productosFiltrados = listaProductos.filter(producto =>
+        producto.name.toLowerCase().includes(searchTerm) || producto.description.toLowerCase().includes(searchTerm)
       );
-
-      // Mostrar los productos filtrados
       mostrarProductos(productosFiltrados);
     });
   } else {
-    console.error("Campo de búsqueda no encontrado");
+    console.error("Campo de búsqueda no encontrado.");
   }
 }
 
-// Cargar y mostrar los productos al cargar la página
-document.addEventListener('DOMContentLoaded', function() {
-  let categoryId = localStorage.getItem("catID");
-
-  // Verifica si categoryId está disponible
-  if (!categoryId) {
-    console.error("No se encontró el ID de categoría.");
-    return;
-  }
-
-  getJSONData(PRODUCTS_URL + categoryId + EXT_TYPE).then(function(resultObj) {
-    if (resultObj.status === "ok") {
-      listaProductos = resultObj.data.products;
-      productosFiltrados = [...listaProductos];  // Inicializa productosFiltrados con todos los productos
-      document.getElementById("categoryname").innerHTML = resultObj.data.catName;
-
-      // Verificar si hay productos disponibles
-      if (listaProductos && listaProductos.length > 0) {
-        mostrarProductos(productosFiltrados); // Mostrar todos los productos inicialmente
-      } else {
-        console.error("No hay productos cargados para filtrar.");
-      }
-      
-      // Activa el filtrado en tiempo real
-      filtrarProductos(); // Asegúrate de que esta línea esté aquí
-    } else {
-      console.error("Error al cargar los productos:", resultObj.status);
-    }
-  }).catch(function(error) {
-    console.error('Error al obtener datos:', error);
-  });
+// Configurar eventos de los botones de filtrado
+document.getElementById('rangeFilterPrice').addEventListener('click', function () {
+  const minPriceValue = parseFloat(document.getElementById('rangeFilterPriceMin').value);
+  const maxPriceValue = parseFloat(document.getElementById('rangeFilterPriceMax').value);
+  minPrice = isNaN(minPriceValue) ? undefined : minPriceValue;
+  maxPrice = isNaN(maxPriceValue) ? undefined : maxPriceValue;
+  mostrarProductos(productosFiltrados);
 });
 
-// Función para actualizar el badge del carrito
-const updateCartBadge = () => {
-  const cart = JSON.parse(localStorage.getItem("cart")) || [];
-  cartBadge.textContent = cart.reduce((total, product) => total + product.quantity, 0);
-};
-
-
-// Añadir evento al botón de filtrado de precios
-document.getElementById('rangeFilterPrice').addEventListener('click', function() {
-  let minPriceValue = document.getElementById('rangeFilterPriceMin').value;
-  let maxPriceValue = document.getElementById('rangeFilterPriceMax').value;
-
-  minPrice = minPriceValue ? parseFloat(minPriceValue) : undefined;
-  maxPrice = maxPriceValue ? parseFloat(maxPriceValue) : undefined;
-
-  if (isNaN(minPrice)) minPrice = undefined;
-  if (isNaN(maxPrice)) maxPrice = undefined;
-
-  // Aplicar filtro de precios sobre productos filtrados
-  mostrarProductos(aplicarFiltroDePrecio(productosFiltrados));
-});
-
-// Añadir eventos a los botones de ordenamiento
-document.getElementById('sortPriceAsc').addEventListener('click', function() {
+document.getElementById('sortPriceAsc').addEventListener('click', () => {
   currentSortCriteria = 'priceAsc';
-  mostrarProductos(productosFiltrados); // Ordena sobre los productos filtrados
+  mostrarProductos(productosFiltrados);
 });
 
-document.getElementById('sortPriceDesc').addEventListener('click', function() {
+document.getElementById('sortPriceDesc').addEventListener('click', () => {
   currentSortCriteria = 'priceDesc';
-  mostrarProductos(productosFiltrados); // Ordena sobre los productos filtrados
+  mostrarProductos(productosFiltrados);
 });
 
-document.getElementById('sortByRelevance').addEventListener('click', function() {
+document.getElementById('sortByRelevance').addEventListener('click', () => {
   currentSortCriteria = 'relevanceDesc';
-  mostrarProductos(productosFiltrados); // Ordena sobre los productos filtrados
+  mostrarProductos(productosFiltrados);
 });
 
-// Añadir evento al botón de limpiar filtro
-document.getElementById('clearPriceFilter').addEventListener('click', function() {
-  // Limpiar los campos de entrada de precios
+document.getElementById('clearPriceFilter').addEventListener('click', () => {
   document.getElementById('rangeFilterPriceMin').value = '';
   document.getElementById('rangeFilterPriceMax').value = '';
-
-  // Restablecer las variables de rango de precios
-  minPrice = undefined;
-  maxPrice = undefined;
-
-  // Mostrar todos los productos (sin filtro)
+  minPrice = maxPrice = undefined;
   mostrarProductos(listaProductos);
 });
+
+// Función para redirigir al producto seleccionado
+function setProductID(id) {
+  localStorage.setItem("productID", id);
+  window.location.href = "product-info.html";
+}
